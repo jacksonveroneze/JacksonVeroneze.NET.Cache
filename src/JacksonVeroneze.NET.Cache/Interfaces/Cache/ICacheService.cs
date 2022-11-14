@@ -8,12 +8,12 @@ namespace JacksonVeroneze.NET.Cache.Interfaces.Cache;
 public interface ICacheService
 {
     Task<TItem> GetAsync<TItem>(string key,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken = default);
 
     Task SetAsync<TItem>(string key, TItem value,
         DistributedCacheEntryOptions options,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken = default);
 
     Task RemoveAsync(string key,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken = default);
 }

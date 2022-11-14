@@ -22,7 +22,7 @@ public class CacheService : ICacheService
     }
 
     public async Task<TItem> GetAsync<TItem>(string key,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         string value = await _cache.GetStringAsync(key,
             cancellationToken);
@@ -34,12 +34,12 @@ public class CacheService : ICacheService
 
         return value != null
             ? JsonSerializer.Deserialize<TItem>(value)
-            : default;
+            : null;
     }
 
     public Task SetAsync<TItem>(string key, TItem value,
         DistributedCacheEntryOptions options,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("{class} - {method} - Key '{key}'",
             nameof(CacheService), nameof(SetAsync), key);
@@ -50,7 +50,7 @@ public class CacheService : ICacheService
     }
 
     public Task RemoveAsync(string key,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         _logger.LogInformation(
             "{class} - {method} - Key '{key}'",
