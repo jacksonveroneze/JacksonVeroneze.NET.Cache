@@ -144,7 +144,7 @@ public class CacheService : ICacheService
     {
         CacheEntry<TItem> entry = new(item);
 
-        string json = JsonSerializer.Serialize(entry);
+        string json = JsonSerializer.Serialize<CacheEntry<TItem>>(entry);
 
         byte[] value = Encoding.UTF8.GetBytes(json);
 

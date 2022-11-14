@@ -16,6 +16,7 @@
         <PackageProjectUrl>JacksonVeroneze.NET.Cache</PackageProjectUrl>
         <PackageLicenseUrl>JacksonVeroneze.NET.Cache/blob/main/LICENSE</PackageLicenseUrl>
         <Copyright>Jackson Veroneze</Copyright>
+        <PublishAot>true</PublishAot>
     </PropertyGroup>
 
     <ItemGroup>
