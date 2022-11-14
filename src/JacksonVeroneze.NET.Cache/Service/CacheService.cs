@@ -41,7 +41,7 @@ public class CacheService : ICacheService
 
         string formatedKey = FormatKey(key);
 
-        byte[] value = await _cache.GetAsync(formatedKey,
+        byte[]? value = await _cache.GetAsync(formatedKey,
             cancellationToken);
 
         bool existsItem = value is not null && value.Length != 0;
@@ -73,7 +73,7 @@ public class CacheService : ICacheService
         return item;
     }
 
-    public async Task<TItem> GetAsync<TItem>(string key,
+    public async Task<TItem?> GetAsync<TItem>(string key,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(_prefixKey, nameof(_prefixKey));
@@ -81,7 +81,7 @@ public class CacheService : ICacheService
 
         string formatedKey = FormatKey(key);
 
-        byte[] value = await _cache.GetAsync(formatedKey,
+        byte[]? value = await _cache.GetAsync(formatedKey,
             cancellationToken);
 
         bool existsItem = value is null || value.Length == 0;
@@ -151,7 +151,7 @@ public class CacheService : ICacheService
         return value;
     }
 
-    private static TItem Deserialize<TItem>(byte[] value)
+    private static TItem Deserialize<TItem>(byte[]? value)
     {
         CacheEntry<TItem> item = JsonSerializer
             .Deserialize<CacheEntry<TItem>>(value);

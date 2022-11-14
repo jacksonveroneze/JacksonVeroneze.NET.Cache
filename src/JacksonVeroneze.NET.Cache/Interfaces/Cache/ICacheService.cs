@@ -8,7 +8,7 @@ public interface ICacheService
         Func<DistributedCacheEntryOptions, Task<TItem>> factory,
         CancellationToken cancellationToken = default);
 
-    Task<TItem> GetAsync<TItem>(string key,
+    Task<TItem?> GetAsync<TItem>(string key,
         CancellationToken cancellationToken = default);
 
     Task RemoveAsync(string key,
