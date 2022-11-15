@@ -14,6 +14,10 @@ trim_trailing_whitespace = true
 [*.xml]
 indent_size = 2
 
+# Xml files
+[*.yml]
+indent_size = 2
+
 # C# files
 [*.cs]
 

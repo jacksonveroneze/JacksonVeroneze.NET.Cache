@@ -1,11 +1,11 @@
 using System.Text;
 using System.Text.Json;
-using JacksonVeroneze.NET.Cache.Interfaces.Cache;
+using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
-namespace JacksonVeroneze.NET.Cache.Service;
+namespace JacksonVeroneze.NET.Cache.Services;
 
 public class CacheService : ICacheService
 {
@@ -24,19 +24,42 @@ public class CacheService : ICacheService
 
     public ICacheService WithPrefixKey(string prefixKey)
     {
-        ArgumentNullException.ThrowIfNull(prefixKey, nameof(prefixKey));
+        ArgumentException.ThrowIfNullOrEmpty(prefixKey, nameof(prefixKey));
 
         _prefixKey = prefixKey;
 
         return this;
     }
 
+    public async Task<TItem?> GetAsync<TItem>(string key,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
+        ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
+
+        string formatedKey = FormatKey(key);
+
+        byte[]? value = await _cache.GetAsync(formatedKey,
+            cancellationToken);
+
+        bool existsItem = value is not null && value.Length != 0;
+
+        _logger.LogDebug(
+            "{class} - {method} - Key: '{key}' - Exists: {exists}",
+            nameof(CacheService),
+            nameof(GetAsync),
+            formatedKey,
+            existsItem);
+
+        return existsItem ? Deserialize<TItem>(value) : default;
+    }
+
     public async Task<TItem> GetOrCreateAsync<TItem>(string key,
         Func<DistributedCacheEntryOptions, Task<TItem>> factory,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(_prefixKey, nameof(_prefixKey));
-        ArgumentNullException.ThrowIfNull(key, nameof(key));
+        ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
+        ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
         ArgumentNullException.ThrowIfNull(factory, nameof(factory));
 
         string formatedKey = FormatKey(key);
@@ -65,7 +88,7 @@ public class CacheService : ICacheService
             Serialize(item), options, cancellationToken);
 
         _logger.LogDebug(
-            "{class} - {method} - Key: '{key}' - Added InCache",
+            "{class} - {method} - '{key}' - Added",
             nameof(CacheService),
             nameof(GetOrCreateAsync),
             formatedKey);
@@ -73,69 +96,47 @@ public class CacheService : ICacheService
         return item;
     }
 
-    public async Task<TItem?> GetAsync<TItem>(string key,
+    public async Task RemoveAsync(string key,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(_prefixKey, nameof(_prefixKey));
-        ArgumentNullException.ThrowIfNull(key, nameof(key));
+        ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
+        ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
 
         string formatedKey = FormatKey(key);
 
-        byte[]? value = await _cache.GetAsync(formatedKey,
+        await _cache.RemoveAsync(formatedKey,
             cancellationToken);
 
-        bool existsItem = value is null || value.Length == 0;
-
         _logger.LogDebug(
-            "{class} - {method} - Key: '{key}' - Exists: {exists}",
-            nameof(CacheService),
-            nameof(GetAsync),
-            formatedKey,
-            existsItem);
-
-        return existsItem ? Deserialize<TItem>(value) : default;
-    }
-
-    public Task RemoveAsync(string key,
-        CancellationToken cancellationToken = default)
-    {
-        ArgumentNullException.ThrowIfNull(_prefixKey, nameof(_prefixKey));
-        ArgumentNullException.ThrowIfNull(key, nameof(key));
-
-        string formatedKey = FormatKey(key);
-
-        _logger.LogDebug(
-            "{class} - {method} - Key '{key}'",
+            "{class} - {method} - '{key}' - Removed",
             nameof(CacheService),
             nameof(RemoveAsync),
             formatedKey);
-
-        return _cache.RemoveAsync(formatedKey,
-            cancellationToken);
     }
 
-    public Task SetAsync<TItem>(string key, TItem item,
+    public async Task SetAsync<TItem>(string key, TItem item,
         Action<DistributedCacheEntryOptions> action,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(_prefixKey, nameof(_prefixKey));
-        ArgumentNullException.ThrowIfNull(key, nameof(key));
+        ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
+        ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
         ArgumentNullException.ThrowIfNull(item, nameof(item));
         ArgumentNullException.ThrowIfNull(action, nameof(action));
 
         string formatedKey = FormatKey(key);
 
-        _logger.LogDebug("{class} - {method} - Key '{key}'",
-            nameof(CacheService),
-            nameof(SetAsync),
-            formatedKey);
-
         DistributedCacheEntryOptions options = new();
 
-        action?.Invoke(options);
+        action(options);
 
-        return _cache.SetAsync(formatedKey,
+        await _cache.SetAsync(formatedKey,
             Serialize(item), options, cancellationToken);
+
+        _logger.LogDebug(
+            "{class} - {method} - '{key}' - Added",
+            nameof(CacheService),
+            nameof(RemoveAsync),
+            formatedKey);
     }
 
     #region Serialize
@@ -144,7 +145,7 @@ public class CacheService : ICacheService
     {
         CacheEntry<TItem> entry = new(item);
 
-        string json = JsonSerializer.Serialize<CacheEntry<TItem>>(entry);
+        string json = JsonSerializer.Serialize(entry);
 
         byte[] value = Encoding.UTF8.GetBytes(json);
 

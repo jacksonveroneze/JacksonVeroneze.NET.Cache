@@ -15,6 +15,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{59B69C29-BE73-438B-9FF5-AFEC10404C69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.UnitTests", "tests\JacksonVeroneze.NET.Cache.UnitTests\JacksonVeroneze.NET.Cache.UnitTests.csproj", "{3E0FC1BC-C8C8-4406-B67C-A0F7D7736A7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.Util", "tests\JacksonVeroneze.NET.Cache.Util\JacksonVeroneze.NET.Cache.Util.csproj", "{A2A68056-1A5D-491D-953A-C848641996DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,8 +34,18 @@ Global
 		{2DD6D78D-A323-4558-9A3C-AC6B83E442C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DD6D78D-A323-4558-9A3C-AC6B83E442C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DD6D78D-A323-4558-9A3C-AC6B83E442C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E0FC1BC-C8C8-4406-B67C-A0F7D7736A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E0FC1BC-C8C8-4406-B67C-A0F7D7736A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E0FC1BC-C8C8-4406-B67C-A0F7D7736A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E0FC1BC-C8C8-4406-B67C-A0F7D7736A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2A68056-1A5D-491D-953A-C848641996DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2A68056-1A5D-491D-953A-C848641996DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2A68056-1A5D-491D-953A-C848641996DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2A68056-1A5D-491D-953A-C848641996DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2DD6D78D-A323-4558-9A3C-AC6B83E442C2} = {69700159-2472-4E72-9A47-DBCE3B4B2DD6}
+		{3E0FC1BC-C8C8-4406-B67C-A0F7D7736A7C} = {59B69C29-BE73-438B-9FF5-AFEC10404C69}
+		{A2A68056-1A5D-491D-953A-C848641996DF} = {59B69C29-BE73-438B-9FF5-AFEC10404C69}
 	EndGlobalSection
 EndGlobal

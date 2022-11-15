@@ -1,14 +1,14 @@
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace JacksonVeroneze.NET.Cache.Interfaces.Cache;
+namespace JacksonVeroneze.NET.Cache.Interfaces;
 
 public interface ICacheService
 {
-    Task<TItem> GetOrCreateAsync<TItem>(string key,
-        Func<DistributedCacheEntryOptions, Task<TItem>> factory,
+    Task<TItem?> GetAsync<TItem>(string key,
         CancellationToken cancellationToken = default);
 
-    Task<TItem?> GetAsync<TItem>(string key,
+    Task<TItem> GetOrCreateAsync<TItem>(string key,
+        Func<DistributedCacheEntryOptions, Task<TItem>> factory,
         CancellationToken cancellationToken = default);
 
     Task RemoveAsync(string key,

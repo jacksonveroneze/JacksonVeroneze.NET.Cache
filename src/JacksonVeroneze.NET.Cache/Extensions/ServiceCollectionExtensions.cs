@@ -1,9 +1,11 @@
-using JacksonVeroneze.NET.Cache.Interfaces.Cache;
-using JacksonVeroneze.NET.Cache.Service;
+using System.Diagnostics.CodeAnalysis;
+using JacksonVeroneze.NET.Cache.Interfaces;
+using JacksonVeroneze.NET.Cache.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JacksonVeroneze.NET.Cache.Extensions;
 
+[ExcludeFromCodeCoverage]
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDistribCache(
