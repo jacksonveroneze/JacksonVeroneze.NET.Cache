@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Services;
 using JacksonVeroneze.NET.Cache.Util;
 using JacksonVeroneze.NET.Cache.Util.Builders;
@@ -37,7 +38,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        var result = _service.WithPrefixKey(prefix);
+        ICacheService? result = _service.WithPrefixKey(prefix);
 
         // -------------------------------------------------------
         // Assert
@@ -102,7 +103,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        var expected = null as byte[];
+        byte[]? expected = null as byte[];
 
         _mockDistributedCache.Setup(mock =>
                 mock.GetAsync(
@@ -119,7 +120,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        var result = await _service.GetAsync<User>(key);
+        User? result = await _service.GetAsync<User>(key);
 
         // -------------------------------------------------------
         // Assert
@@ -145,8 +146,8 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        var user = UserBuilder.BuildSingle();
-        var expected = UserDataBuilder.BuildSingle(user);
+        User? user = UserBuilder.BuildSingle();
+        byte[]? expected = UserDataBuilder.BuildSingle(user);
 
         _mockDistributedCache.Setup(mock =>
                 mock.GetAsync(
@@ -163,7 +164,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        var result = await _service.GetAsync<User>(key);
+        User? result = await _service.GetAsync<User>(key);
 
         // -------------------------------------------------------
         // Assert
@@ -194,9 +195,9 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        var user = UserBuilder.BuildSingle();
+        User? user = UserBuilder.BuildSingle();
 
-        var expected = UserDataBuilder.BuildSingle(user);
+        byte[]? expected = UserDataBuilder.BuildSingle(user);
 
         _mockDistributedCache.Setup(mock =>
                 mock.GetAsync(
@@ -220,7 +221,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        var result = await _service.GetOrCreateAsync(key, func);
+        User? result = await _service.GetOrCreateAsync(key, func);
 
         // -------------------------------------------------------
         // Assert
@@ -253,9 +254,9 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        var user = UserBuilder.BuildSingle();
+        User? user = UserBuilder.BuildSingle();
 
-        var expected = null as byte[];
+        byte[]? expected = null;
 
         _mockDistributedCache.Setup(mock =>
                 mock.GetAsync(
@@ -279,7 +280,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        var result = await _service.GetOrCreateAsync(key, func);
+        User? result = await _service.GetOrCreateAsync(key, func);
 
         // -------------------------------------------------------
         // Assert
@@ -367,14 +368,13 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        var user = UserBuilder.BuildSingle();
+        User? user = UserBuilder.BuildSingle();
 
-        var action = new Action<DistributedCacheEntryOptions>(
-            options =>
-            {
-                options.AbsoluteExpirationRelativeToNow =
-                    TimeSpan.FromSeconds(10);
-            });
+        Action<DistributedCacheEntryOptions>? action = options =>
+        {
+            options.AbsoluteExpirationRelativeToNow =
+                TimeSpan.FromSeconds(10);
+        };
 
         // -------------------------------------------------------
         // Act
