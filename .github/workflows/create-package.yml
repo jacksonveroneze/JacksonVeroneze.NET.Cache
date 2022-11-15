@@ -29,12 +29,10 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          cd src
           dotnet restore
 
       - name: Test
         run: |
-          cd src
           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
   build:
