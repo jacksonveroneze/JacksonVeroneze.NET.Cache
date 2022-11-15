@@ -1,1 +1,0 @@
-# JacksonVeroneze.NET.EntityFramework
