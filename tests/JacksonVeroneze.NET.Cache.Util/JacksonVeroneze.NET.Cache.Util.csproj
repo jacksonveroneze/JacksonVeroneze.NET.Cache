@@ -1,25 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Bogus" Version="34.0.2" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
-        <PackageReference Include="Moq" Version="4.18.1" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="34.0.2"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0"/>
+    <PackageReference Include="Moq" Version="4.18.1"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\src\JacksonVeroneze.NET.Cache\JacksonVeroneze.NET.Cache.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\JacksonVeroneze.NET.Cache\JacksonVeroneze.NET.Cache.csproj"/>
+  </ItemGroup>
 
-    <ItemGroup>
-        <Using Include="Bogus" />
-        <Using Include="Moq" />
-        <Using Include="System.Diagnostics.CodeAnalysis" />
-    </ItemGroup>
-    
+  <ItemGroup>
+    <Using Include="Bogus"/>
+    <Using Include="Moq"/>
+    <Using Include="System.Diagnostics.CodeAnalysis"/>
+  </ItemGroup>
+
 </Project>
