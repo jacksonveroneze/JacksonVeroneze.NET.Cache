@@ -14,3 +14,4 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         source_branch: development
         target_branch: main
+        allow_no_diff: true
