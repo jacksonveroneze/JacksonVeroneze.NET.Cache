@@ -2,9 +2,8 @@ name: Pull Requests
 
 on:
   pull_request:
-    types: [opened, reopened]
-    branches:
-    - development
+    types:
+      - opened
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
