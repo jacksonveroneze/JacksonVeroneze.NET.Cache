@@ -29,8 +29,7 @@ jobs:
       - name: Test
         run: dotnet test --configuration Release --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
-      - uses: hkusu/review-assign-action@v1
+      - uses: samspills/assign-pr-to-author@v1.0
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
         with:
-          assignees: ${{ github.actor }} # assign pull request author
-          reviewers: ${{ github.actor }} # if draft, assigned when draft is released
-          max-num-of-reviewers: 2
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
