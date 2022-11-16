@@ -28,3 +28,9 @@ jobs:
 
       - name: Test
         run: dotnet test --configuration Release --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+      - uses: hkusu/review-assign-action@v1
+        with:
+          assignees: ${{ github.actor }} # assign pull request author
+          reviewers: ${{ github.actor }} # if draft, assigned when draft is released
+          max-num-of-reviewers: 2
