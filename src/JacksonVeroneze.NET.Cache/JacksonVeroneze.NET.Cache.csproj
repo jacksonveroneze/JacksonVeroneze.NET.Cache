@@ -8,7 +8,7 @@
 
     <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
     <PackageId>JacksonVeroneze.NET.Cache</PackageId>
-    <Version>1.0.x</Version>
+    <Version>1.0.0</Version>
     <Authors>Jackson Veroneze</Authors>
     <Company>jacksonveroneze</Company>
     <PackageDescription>JacksonVeroneze.NET.Cache</PackageDescription>
