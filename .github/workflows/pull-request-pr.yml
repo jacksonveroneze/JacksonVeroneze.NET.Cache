@@ -13,8 +13,8 @@ jobs:
     - name: pull-request
       uses: repo-sync/pull-request@v2
       with:
-        source_branch: "main"                                 # If blank, default: triggered branch
-        destination_branch: "development"                      # If blank, default: master
+        source_branch: "development"                                 # If blank, default: triggered branch
+        destination_branch: "main"                      # If blank, default: master
         pr_title: "Pulling ${{ github.ref }} into master" # Title of pull request
         pr_reviewer: "jacksonveroneze"                         # Comma-separated list (no spaces)
         pr_assignee: "jacksonveroneze"                         # Comma-separated list (no spaces)
