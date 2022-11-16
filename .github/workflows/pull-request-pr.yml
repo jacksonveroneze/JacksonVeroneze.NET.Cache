@@ -1,0 +1,24 @@
+name: Auto PR
+
+on:
+  push:
+    branches:
+    - "development"  # Support wildcard matching
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
+      with:
+        source_branch: "development"                                 # If blank, default: triggered branch
+        destination_branch: "main"                      # If blank, default: master
+        pr_title: "Pulling ${{ github.ref }} into master" # Title of pull request
+        pr_reviewer: "jacksonveroneze"                         # Comma-separated list (no spaces)
+        pr_assignee: "jacksonveroneze"                         # Comma-separated list (no spaces)
+        pr_label: "auto-pr"                               # Comma-separated list (no spaces)
+        pr_draft: false                                    # Creates pull request as draft
+        pr_allow_empty: true                              # Creates pull request even if there are no changes
+        github_token: ${{ secrets.GITHUB_TOKEN }}      # If blank, default: secrets.GITHUB_TOKEN
