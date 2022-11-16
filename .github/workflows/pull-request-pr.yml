@@ -1,19 +1,22 @@
 on:
   push:
     branches:
-    - development
+    - "development  # Support wildcard matching
 
 jobs:
   pull-request:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
       with:
-        fetch-depth: 0
-    - name: Run the Action
-      uses: devops-infra/action-pull-request@v0.5.3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        source_branch: development
-        target_branch: main
-        allow_no_diff: true
+        source_branch: "main"                                 # If blank, default: triggered branch
+        destination_branch: "development"                      # If blank, default: master
+        pr_title: "Pulling ${{ github.ref }} into master" # Title of pull request
+        pr_reviewer: "jacksonveroneze"                         # Comma-separated list (no spaces)
+        pr_assignee: "jacksonveroneze"                         # Comma-separated list (no spaces)
+        pr_label: "auto-pr"                               # Comma-separated list (no spaces)
+        pr_draft: false                                    # Creates pull request as draft
+        pr_allow_empty: true                              # Creates pull request even if there are no changes
+        github_token: ${{ secrets.CUSTOM_GH_TOKEN }}      # If blank, default: secrets.GITHUB_TOKEN
