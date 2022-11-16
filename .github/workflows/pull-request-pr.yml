@@ -3,7 +3,7 @@ name: Auto PR
 on:
   push:
     branches:
-    - "development"  # Support wildcard matching
+    - development
 
 jobs:
   pull-request:
@@ -11,7 +11,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: pull-request
-      uses: repo-sync/pull-request@v2
+      with:
+        fetch-depth: 0
       with:
         source_branch: "development"                                 # If blank, default: triggered branch
         destination_branch: "main"                      # If blank, default: master
