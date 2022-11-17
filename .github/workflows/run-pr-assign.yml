@@ -1,24 +1,16 @@
-name: Run Unit Tests
+name: Assign PR
 
 on:
   pull_request:
-    branches: [ main ]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  build:
+  assign:
     runs-on: ubuntu-latest
     steps:
-      - name: Assign PR
-        uses: samspills/assign-pr-to-author@v1.0
-        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+      - uses: hkusu/review-assign-action@v1
         with:
-          repo-token: '${{ secrets.GITHUB_TOKEN }}'
-
-      - name: Add Pull Request Reviewer
-        uses: AveryCameronUofR/add-reviewer-gh-action@1.0.3
-        with: 
-          reviewers: "jacksonveroneze"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ github.actor }} # assign pull request author
+          reviewers: ${{ github.actor }} # if draft, assigned when draft is released
