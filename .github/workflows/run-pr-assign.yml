@@ -1,7 +1,8 @@
-name: Assign PR
+name: Review Assign
 
 on:
   pull_request:
+    types: [opened, ready_for_review]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -13,5 +14,5 @@ jobs:
       - uses: hkusu/review-assign-action@v1
         with:
           assignees: ${{ github.actor }} # assign pull request author
-          reviewers: ${{ github.actor }} # if draft, assigned when draft is released
+          reviewers: jacksonveroneze # if draft, assigned when draft is released
           max-num-of-reviewers: 1
