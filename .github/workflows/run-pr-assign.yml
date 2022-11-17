@@ -14,3 +14,4 @@ jobs:
         with:
           assignees: ${{ github.actor }} # assign pull request author
           reviewers: ${{ github.actor }} # if draft, assigned when draft is released
+          max-num-of-reviewers: 1
