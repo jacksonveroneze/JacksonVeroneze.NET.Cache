@@ -5,7 +5,7 @@ name: Auto PR
 on:
   push:
     branches:
-    - "development"  # Support wildcard matching
+    - "development99"  # Support wildcard matching
 
 jobs:
   pull-request:
