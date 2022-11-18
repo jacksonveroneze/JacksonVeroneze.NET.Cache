@@ -7,7 +7,7 @@ public interface ICacheService
     Task<TItem?> GetAsync<TItem>(string key,
         CancellationToken cancellationToken = default);
 
-    Task<TItem> GetOrCreateAsync<TItem>(string key,
+    Task<TItem?> GetOrCreateAsync<TItem>(string key,
         Func<DistributedCacheEntryOptions, Task<TItem>> factory,
         CancellationToken cancellationToken = default);
 

@@ -1,8 +1,8 @@
-name: Review Assign
+name: Assign author to PR
 
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review, edited]
+    types: [ opened, reopened, ready_for_review, edited ]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

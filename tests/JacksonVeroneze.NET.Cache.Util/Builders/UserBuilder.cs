@@ -1,12 +1,8 @@
 namespace JacksonVeroneze.NET.Cache.Util.Builders;
 
 [ExcludeFromCodeCoverage]
-public class UserBuilder
+public static class UserBuilder
 {
-    private UserBuilder()
-    {
-    }
-
     public static User BuildSingle()
     {
         return Factory().Generate();

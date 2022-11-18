@@ -5,12 +5,8 @@ using JacksonVeroneze.NET.Cache.Models;
 namespace JacksonVeroneze.NET.Cache.Util.Builders;
 
 [ExcludeFromCodeCoverage]
-public class UserDataBuilder
+public static class UserDataBuilder
 {
-    private UserDataBuilder()
-    {
-    }
-
     public static byte[] BuildSingle<TType>(TType user)
     {
         CacheEntry<TType> entry = new(user);
