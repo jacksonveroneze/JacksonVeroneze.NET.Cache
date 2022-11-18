@@ -17,9 +17,7 @@ Tabela de conteúdos
 
 🚧 Em construção... 🚧
 
-## ✅ Features
-
-- [ x ] Cache Redis
+## ✅ Uso
 
 ```yaml
     services.AddDistribCache();
