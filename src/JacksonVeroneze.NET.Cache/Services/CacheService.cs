@@ -54,7 +54,7 @@ public class CacheService : ICacheService
         return existsItem ? Deserialize<TItem>(value) : default;
     }
 
-    public async Task<TItem> GetOrCreateAsync<TItem>(string key,
+    public async Task<TItem?> GetOrCreateAsync<TItem>(string key,
         Func<DistributedCacheEntryOptions, Task<TItem>> factory,
         CancellationToken cancellationToken = default)
     {
