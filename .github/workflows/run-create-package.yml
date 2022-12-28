@@ -31,4 +31,4 @@ jobs:
         run: dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }} --include-symbols --include-source
 
       - name: Publish Package
-        run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.NUGET_PUBLISH_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push ./src/JacksonVeroneze.NET.MongoDB/bin/Release/JacksonVeroneze.NET.Cache.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PUBLISH_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
