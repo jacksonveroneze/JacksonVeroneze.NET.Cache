@@ -18,6 +18,11 @@ public class CacheServiceTests
     public CacheServiceTests()
     {
         _mockLogger = new Mock<ILogger<CacheService>>();
+
+        _mockLogger
+            .Setup(mock => mock.IsEnabled(LogLevel.Debug))
+            .Returns(true);
+
         _mockDistributedCache = new Mock<IDistributedCache>();
 
         _service = new CacheService(

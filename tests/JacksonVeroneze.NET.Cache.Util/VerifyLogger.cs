@@ -17,12 +17,12 @@ public static class VerifyLogger
             => x.ToString()!.Contains(expectedMessage);
 
         logger.Verify(
-            log => log.Log(
+            x => x.Log(
                 It.Is<LogLevel>(l => l == expectedLogLevel),
-                It.Is<EventId>(eventId => eventId.Id == 0),
+                It.IsAny<EventId>(),
                 It.Is<It.IsAnyType>((v, t) => state(v, t)),
                 It.IsAny<Exception>(),
-                It.IsAny<Func<It.IsAnyType, Exception, string>>()!), times);
+                It.Is<Func<It.IsAnyType, Exception, string>>((v, t) => true)!), times);
 
         return logger;
     }

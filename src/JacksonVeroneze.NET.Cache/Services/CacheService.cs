@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using JacksonVeroneze.NET.Cache.Extensions;
 using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using Microsoft.Extensions.Caching.Distributed;
@@ -44,9 +45,7 @@ public class CacheService : ICacheService
 
         bool existsItem = value is not null && value.Length != 0;
 
-        _logger.LogDebug(
-            "{class} - {method} - Key: '{key}' - Exists: {exists}",
-            nameof(CacheService),
+        _logger.LogGet(nameof(CacheService),
             nameof(GetAsync),
             formatedKey,
             existsItem);
@@ -71,9 +70,7 @@ public class CacheService : ICacheService
 
         if (existsItem)
         {
-            _logger.LogDebug(
-                "{class} - {method} - Key: '{key}' - InCache",
-                nameof(CacheService),
+            _logger.LogGetOrCreateInCache(nameof(CacheService),
                 nameof(GetOrCreateAsync),
                 formatedKey);
 
@@ -87,9 +84,7 @@ public class CacheService : ICacheService
         await _cache.SetAsync(formatedKey,
             Serialize(item), options, cancellationToken);
 
-        _logger.LogDebug(
-            "{class} - {method} - '{key}' - Added",
-            nameof(CacheService),
+        _logger.LogGetOrCreateNotInCache(nameof(CacheService),
             nameof(GetOrCreateAsync),
             formatedKey);
 
@@ -107,9 +102,7 @@ public class CacheService : ICacheService
         await _cache.RemoveAsync(formatedKey,
             cancellationToken);
 
-        _logger.LogDebug(
-            "{class} - {method} - '{key}' - Removed",
-            nameof(CacheService),
+        _logger.LogRemove(nameof(CacheService),
             nameof(RemoveAsync),
             formatedKey);
     }
@@ -132,9 +125,7 @@ public class CacheService : ICacheService
         await _cache.SetAsync(formatedKey,
             Serialize(item), options, cancellationToken);
 
-        _logger.LogDebug(
-            "{class} - {method} - '{key}' - Added",
-            nameof(CacheService),
+        _logger.LogSet(nameof(CacheService),
             nameof(RemoveAsync),
             formatedKey);
     }
