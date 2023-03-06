@@ -43,7 +43,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        ICacheService? result = _service.WithPrefixKey(prefix);
+        ICacheService result = _service.WithPrefixKey(prefix);
 
         // -------------------------------------------------------
         // Assert
@@ -137,7 +137,7 @@ public class CacheServiceTests
             mock.GetAsync(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService),
+        _mockLogger.Verify(nameof(CacheService.GetAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
@@ -151,8 +151,8 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        User? user = UserBuilder.BuildSingle();
-        byte[]? expected = UserDataBuilder.BuildSingle(user);
+        User user = UserBuilder.BuildSingle();
+        byte[] expected = UserDataBuilder.BuildSingle(user);
 
         _mockDistributedCache.Setup(mock =>
                 mock.GetAsync(
@@ -182,7 +182,7 @@ public class CacheServiceTests
             mock.GetAsync(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService),
+        _mockLogger.Verify(nameof(CacheService.GetAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
@@ -200,9 +200,9 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        User? user = UserBuilder.BuildSingle();
+        User user = UserBuilder.BuildSingle();
 
-        byte[]? expected = UserDataBuilder.BuildSingle(user);
+        byte[] expected = UserDataBuilder.BuildSingle(user);
 
         _mockDistributedCache.Setup(mock =>
                 mock.GetAsync(
@@ -245,7 +245,7 @@ public class CacheServiceTests
                 It.IsAny<DistributedCacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), Times.Never);
 
-        _mockLogger.Verify(nameof(CacheService),
+        _mockLogger.Verify(nameof(CacheService.GetOrCreateAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
@@ -259,7 +259,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        User? user = UserBuilder.BuildSingle();
+        User user = UserBuilder.BuildSingle();
 
         byte[]? expected = null;
 
@@ -304,7 +304,7 @@ public class CacheServiceTests
                 It.IsAny<DistributedCacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService),
+        _mockLogger.Verify(nameof(CacheService.GetOrCreateAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
@@ -355,7 +355,7 @@ public class CacheServiceTests
             mock.RemoveAsync(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService),
+        _mockLogger.Verify(nameof(CacheService.RemoveAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
@@ -373,9 +373,9 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        User? user = UserBuilder.BuildSingle();
+        User user = UserBuilder.BuildSingle();
 
-        Action<DistributedCacheEntryOptions>? action = options =>
+        Action<DistributedCacheEntryOptions> action = options =>
         {
             options.AbsoluteExpirationRelativeToNow =
                 TimeSpan.FromSeconds(10);
@@ -395,7 +395,7 @@ public class CacheServiceTests
                 It.IsAny<DistributedCacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService),
+        _mockLogger.Verify(nameof(CacheService.SetAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 

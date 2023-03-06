@@ -126,7 +126,7 @@ public class CacheService : ICacheService
             Serialize(item), options, cancellationToken);
 
         _logger.LogSet(nameof(CacheService),
-            nameof(RemoveAsync),
+            nameof(SetAsync),
             formatedKey);
     }
 
