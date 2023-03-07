@@ -20,7 +20,7 @@ public class CacheService : ICacheService
         _logger = logger;
         _cache = cache;
 
-        _prefixKey = "_default_";
+        _prefixKey = string.Empty;
     }
 
     public ICacheService WithPrefixKey(string prefixKey)
@@ -63,8 +63,8 @@ public class CacheService : ICacheService
 
         string formatedKey = FormatKey(key);
 
-        byte[]? value = await _cache.GetAsync(formatedKey,
-            cancellationToken);
+        byte[]? value = await _cache.GetAsync(
+            formatedKey, cancellationToken);
 
         bool existsItem = value is not null && value.Length != 0;
 
@@ -107,7 +107,8 @@ public class CacheService : ICacheService
             formatedKey);
     }
 
-    public async Task SetAsync<TItem>(string key, TItem item,
+    public async Task SetAsync<TItem>(string key,
+        TItem item,
         Action<DistributedCacheEntryOptions> action,
         CancellationToken cancellationToken = default)
     {
@@ -126,7 +127,7 @@ public class CacheService : ICacheService
             Serialize(item), options, cancellationToken);
 
         _logger.LogSet(nameof(CacheService),
-            nameof(RemoveAsync),
+            nameof(SetAsync),
             formatedKey);
     }
 
