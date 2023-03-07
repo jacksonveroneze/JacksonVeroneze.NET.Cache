@@ -28,6 +28,8 @@ public class CacheServiceTests
         _service = new CacheService(
             _mockLogger.Object,
             _mockDistributedCache.Object);
+
+        _service.WithPrefixKey("prefix");
     }
 
     #region WithPrefixKey

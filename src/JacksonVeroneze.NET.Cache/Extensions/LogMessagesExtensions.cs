@@ -37,7 +37,7 @@ public static partial class LogMessagesExtensions
         string key);
 
     [LoggerMessage(
-        EventId =5,
+        EventId = 5,
         Level = LogLevel.Debug,
         Message = "{className} - {methodName} - Key: '{key}' - Added")]
     public static partial void LogSet(this ILogger logger,

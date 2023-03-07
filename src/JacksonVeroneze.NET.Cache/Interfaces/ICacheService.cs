@@ -14,7 +14,8 @@ public interface ICacheService
     Task RemoveAsync(string key,
         CancellationToken cancellationToken = default);
 
-    Task SetAsync<TItem>(string key, TItem value,
+    Task SetAsync<TItem>(string key,
+        TItem value,
         Action<DistributedCacheEntryOptions> action,
         CancellationToken cancellationToken = default);
 
