@@ -40,7 +40,7 @@ public class DistributedCacheAdapter : ICacheAdapter
         {
             AbsoluteExpiration = options.AbsoluteExpiration,
             SlidingExpiration = options.SlidingExpiration,
-            AbsoluteExpirationRelativeToNow = options.AbsoluteExpirationRelativeToNow,
+            AbsoluteExpirationRelativeToNow = options.AbsoluteExpirationRelativeToNow
         };
 
         return _cache.SetAsync(key,
