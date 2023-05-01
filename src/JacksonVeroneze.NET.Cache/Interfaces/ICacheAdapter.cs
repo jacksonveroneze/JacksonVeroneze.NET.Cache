@@ -5,7 +5,7 @@ namespace JacksonVeroneze.NET.Cache.Interfaces;
 public interface ICacheAdapter
 {
     Task<TItem?> GetAsync<TItem>(string key,
-        CancellationToken cancellationToken = default) where TItem : class;
+        CancellationToken cancellationToken = default);
 
     Task RemoveAsync(string key,
         CancellationToken cancellationToken = default);
@@ -13,5 +13,5 @@ public interface ICacheAdapter
     Task SetAsync<TItem>(string key,
         TItem value,
         CacheEntryOptions options,
-        CancellationToken cancellationToken = default) where TItem : class;
+        CancellationToken cancellationToken = default);
 }

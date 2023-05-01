@@ -13,7 +13,7 @@ public class BarrelAdapter : ICacheAdapter
     }
 
     public Task<TItem?> GetAsync<TItem>(string key,
-        CancellationToken cancellationToken = default) where TItem : class
+        CancellationToken cancellationToken = default)
     {
         TItem? result = Barrel.Current.Get<TItem>(key);
 
@@ -31,7 +31,7 @@ public class BarrelAdapter : ICacheAdapter
     public Task SetAsync<TItem>(string key,
         TItem value,
         CacheEntryOptions options,
-        CancellationToken cancellationToken = default) where TItem : class
+        CancellationToken cancellationToken = default)
     {
         Barrel.Current.Add(key, value,
             expireIn: options.AbsoluteExpirationRelativeToNow!.Value);

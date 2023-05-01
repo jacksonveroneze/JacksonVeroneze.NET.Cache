@@ -15,7 +15,7 @@ public class DistributedCacheAdapter : ICacheAdapter
     }
 
     public async Task<TItem?> GetAsync<TItem>(string key,
-        CancellationToken cancellationToken = default) where TItem : class
+        CancellationToken cancellationToken = default)
     {
         byte[]? value = await _cache.GetAsync(
             key, cancellationToken);
@@ -34,7 +34,7 @@ public class DistributedCacheAdapter : ICacheAdapter
     public Task SetAsync<TItem>(string key,
         TItem value,
         CacheEntryOptions options,
-        CancellationToken cancellationToken = default) where TItem : class
+        CancellationToken cancellationToken = default)
     {
         DistributedCacheEntryOptions cacheOptions = new()
         {

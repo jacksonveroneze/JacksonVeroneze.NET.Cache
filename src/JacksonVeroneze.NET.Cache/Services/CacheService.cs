@@ -30,7 +30,7 @@ public class CacheService : ICacheService
     }
 
     public async Task<TItem?> GetAsync<TItem>(string key,
-        CancellationToken cancellationToken = default) where TItem : class
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
         ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
@@ -50,7 +50,7 @@ public class CacheService : ICacheService
 
     public async Task<TItem?> GetOrCreateAsync<TItem>(string key,
         Func<CacheEntryOptions, Task<TItem>> factory,
-        CancellationToken cancellationToken = default) where TItem : class
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
         ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
@@ -104,7 +104,7 @@ public class CacheService : ICacheService
     public async Task SetAsync<TItem>(string key,
         TItem item,
         Action<CacheEntryOptions> action,
-        CancellationToken cancellationToken = default) where TItem : class
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
         ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
