@@ -19,13 +19,10 @@ Tabela de conteúdos
 
 ## ✅ Uso
 
-```yaml
-services.AddCacheService();
-```
-
-O método de extensão registra as seguintes dependências:
-
 ```csharp
+services.AddCacheService();
+
+// O método de extensão registra as seguintes dependências:
 services.AddTransient<ICacheAdapter, DistributedCacheAdapter>();
 services.AddTransient<ICacheService, CacheService>();
 ```
