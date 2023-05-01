@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Caching.Distributed;
+using JacksonVeroneze.NET.Cache.Models;
 
 namespace JacksonVeroneze.NET.Cache.Interfaces;
 
@@ -8,7 +8,7 @@ public interface ICacheService
         CancellationToken cancellationToken = default);
 
     Task<TItem?> GetOrCreateAsync<TItem>(string key,
-        Func<DistributedCacheEntryOptions, Task<TItem>> factory,
+        Func<CacheEntryOptions, Task<TItem>> factory,
         CancellationToken cancellationToken = default);
 
     Task RemoveAsync(string key,
@@ -16,7 +16,7 @@ public interface ICacheService
 
     Task SetAsync<TItem>(string key,
         TItem value,
-        Action<DistributedCacheEntryOptions> action,
+        Action<CacheEntryOptions> action,
         CancellationToken cancellationToken = default);
 
     ICacheService WithPrefixKey(string prefixKey);

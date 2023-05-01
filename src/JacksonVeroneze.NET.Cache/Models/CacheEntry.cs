@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 namespace JacksonVeroneze.NET.Cache.Models;
 
+[ExcludeFromCodeCoverage]
 public readonly struct CacheEntry<TItem>
 {
     public TItem Value { get; }

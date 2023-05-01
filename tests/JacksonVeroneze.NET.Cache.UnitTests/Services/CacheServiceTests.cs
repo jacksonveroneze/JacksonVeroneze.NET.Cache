@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Cache.Interfaces;
+using JacksonVeroneze.NET.Cache.Models;
 using JacksonVeroneze.NET.Cache.Services;
 using JacksonVeroneze.NET.Cache.Util;
 using JacksonVeroneze.NET.Cache.Util.Builders;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.NET.Cache.UnitTests.Services;
@@ -11,7 +11,9 @@ namespace JacksonVeroneze.NET.Cache.UnitTests.Services;
 public class CacheServiceTests
 {
     private readonly Mock<ILogger<CacheService>> _mockLogger;
-    private readonly Mock<IDistributedCache> _mockDistributedCache;
+
+    // private readonly Mock<IDistributedCache> _mockDistributedCache;
+    private readonly Mock<ICacheAdapter> _mockCacheAdapter;
 
     private readonly CacheService _service;
 
@@ -23,11 +25,11 @@ public class CacheServiceTests
             .Setup(mock => mock.IsEnabled(LogLevel.Debug))
             .Returns(true);
 
-        _mockDistributedCache = new Mock<IDistributedCache>();
+        _mockCacheAdapter = new Mock<ICacheAdapter>();
 
         _service = new CacheService(
             _mockLogger.Object,
-            _mockDistributedCache.Object);
+            _mockCacheAdapter.Object);
 
         _service.WithPrefixKey("prefix");
     }
@@ -110,10 +112,10 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        byte[]? expected = null as byte[];
+        User? expected = null;
 
-        _mockDistributedCache.Setup(mock =>
-                mock.GetAsync(
+        _mockCacheAdapter.Setup(mock =>
+                mock.GetAsync<User>(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
             .Callback((string keyCb, CancellationToken _) =>
@@ -135,8 +137,8 @@ public class CacheServiceTests
         result.Should()
             .BeNull();
 
-        _mockDistributedCache.Verify(mock =>
-            mock.GetAsync(It.IsAny<string>(),
+        _mockCacheAdapter.Verify(mock =>
+            mock.GetAsync<User>(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
         _mockLogger.Verify(nameof(CacheService.GetAsync),
@@ -153,11 +155,10 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        User user = UserBuilder.BuildSingle();
-        byte[] expected = UserDataBuilder.BuildSingle(user);
+        User expected = UserBuilder.BuildSingle();
 
-        _mockDistributedCache.Setup(mock =>
-                mock.GetAsync(
+        _mockCacheAdapter.Setup(mock =>
+                mock.GetAsync<User>(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
             .Callback((string keyCb, CancellationToken _) =>
@@ -178,10 +179,10 @@ public class CacheServiceTests
         // -------------------------------------------------------
         result.Should()
             .NotBeNull()
-            .And.BeEquivalentTo(user);
+            .And.BeEquivalentTo(expected);
 
-        _mockDistributedCache.Verify(mock =>
-            mock.GetAsync(It.IsAny<string>(),
+        _mockCacheAdapter.Verify(mock =>
+            mock.GetAsync<User>(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
         _mockLogger.Verify(nameof(CacheService.GetAsync),
@@ -202,12 +203,10 @@ public class CacheServiceTests
         // -------------------------------------------------------
         const string key = "cache_key";
 
-        User user = UserBuilder.BuildSingle();
+        User expected = UserBuilder.BuildSingle();
 
-        byte[] expected = UserDataBuilder.BuildSingle(user);
-
-        _mockDistributedCache.Setup(mock =>
-                mock.GetAsync(
+        _mockCacheAdapter.Setup(mock =>
+                mock.GetAsync<User>(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
             .Callback((string keyCb, CancellationToken _) =>
@@ -218,11 +217,11 @@ public class CacheServiceTests
             })
             .ReturnsAsync(expected);
 
-        Func<DistributedCacheEntryOptions, Task<User>> func = options =>
+        Func<CacheEntryOptions, Task<User>> func = options =>
         {
             options.SlidingExpiration = TimeSpan.FromSeconds(5);
 
-            return Task.FromResult(user);
+            return Task.FromResult(expected);
         };
 
         // -------------------------------------------------------
@@ -235,16 +234,16 @@ public class CacheServiceTests
         // -------------------------------------------------------
         result.Should()
             .NotBeNull()
-            .And.BeEquivalentTo(user);
+            .And.BeEquivalentTo(expected);
 
-        _mockDistributedCache.Verify(mock =>
-            mock.GetAsync(It.IsAny<string>(),
+        _mockCacheAdapter.Verify(mock =>
+            mock.GetAsync<User>(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockDistributedCache.Verify(mock =>
+        _mockCacheAdapter.Verify(mock =>
             mock.SetAsync(It.IsAny<string>(),
-                It.IsAny<byte[]>(),
-                It.IsAny<DistributedCacheEntryOptions>(),
+                It.IsAny<User>(),
+                It.IsAny<CacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), Times.Never);
 
         _mockLogger.Verify(nameof(CacheService.GetOrCreateAsync),
@@ -262,11 +261,10 @@ public class CacheServiceTests
         const string key = "cache_key";
 
         User user = UserBuilder.BuildSingle();
+        User? expectedCache = null;
 
-        byte[]? expected = null;
-
-        _mockDistributedCache.Setup(mock =>
-                mock.GetAsync(
+        _mockCacheAdapter.Setup(mock =>
+                mock.GetAsync<User>(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
             .Callback((string keyCb, CancellationToken _) =>
@@ -275,9 +273,9 @@ public class CacheServiceTests
                     .NotBeEmpty()
                     .And.Contain(key);
             })
-            .ReturnsAsync(expected);
+            .ReturnsAsync(expectedCache);
 
-        Func<DistributedCacheEntryOptions, Task<User>> func = options =>
+        Func<CacheEntryOptions, Task<User>> func = options =>
         {
             options.SlidingExpiration = TimeSpan.FromSeconds(5);
 
@@ -296,14 +294,14 @@ public class CacheServiceTests
             .NotBeNull()
             .And.BeEquivalentTo(user);
 
-        _mockDistributedCache.Verify(mock =>
-            mock.GetAsync(It.IsAny<string>(),
+        _mockCacheAdapter.Verify(mock =>
+            mock.GetAsync<User>(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockDistributedCache.Verify(mock =>
+        _mockCacheAdapter.Verify(mock =>
             mock.SetAsync(It.IsAny<string>(),
-                It.IsAny<byte[]>(),
-                It.IsAny<DistributedCacheEntryOptions>(),
+                It.IsAny<User>(),
+                It.IsAny<CacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
         _mockLogger.Verify(nameof(CacheService.GetOrCreateAsync),
@@ -353,7 +351,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Assert
         // -------------------------------------------------------
-        _mockDistributedCache.Verify(mock =>
+        _mockCacheAdapter.Verify(mock =>
             mock.RemoveAsync(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
@@ -377,7 +375,7 @@ public class CacheServiceTests
 
         User user = UserBuilder.BuildSingle();
 
-        Action<DistributedCacheEntryOptions> action = options =>
+        Action<CacheEntryOptions> action = options =>
         {
             options.AbsoluteExpirationRelativeToNow =
                 TimeSpan.FromSeconds(10);
@@ -391,10 +389,10 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Assert
         // -------------------------------------------------------
-        _mockDistributedCache.Verify(mock =>
+        _mockCacheAdapter.Verify(mock =>
             mock.SetAsync(It.IsAny<string>(),
-                It.IsAny<byte[]>(),
-                It.IsAny<DistributedCacheEntryOptions>(),
+                It.IsAny<User>(),
+                It.IsAny<CacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
         _mockLogger.Verify(nameof(CacheService.SetAsync),
