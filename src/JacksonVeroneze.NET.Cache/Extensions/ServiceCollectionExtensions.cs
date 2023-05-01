@@ -9,7 +9,7 @@ namespace JacksonVeroneze.NET.Cache.Extensions;
 [ExcludeFromCodeCoverage]
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddDistribCache(
+    public static IServiceCollection AddCacheService(
         this IServiceCollection services)
     {
         services.AddTransient<ICacheAdapter, DistributedCacheAdapter>();

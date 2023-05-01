@@ -63,9 +63,10 @@ public class CacheService : ICacheService
 
         if (value is not null)
         {
-            _logger.LogGetOrCreateInCache(nameof(CacheService),
+            _logger.LogGet(nameof(CacheService),
                 nameof(GetOrCreateAsync),
-                formatedKey);
+                formatedKey,
+                true);
 
             return value;
         }
@@ -77,7 +78,7 @@ public class CacheService : ICacheService
         await _adapter.SetAsync(formatedKey,
             item, options, cancellationToken);
 
-        _logger.LogGetOrCreateNotInCache(nameof(CacheService),
+        _logger.LogSet(nameof(CacheService),
             nameof(GetOrCreateAsync),
             formatedKey);
 

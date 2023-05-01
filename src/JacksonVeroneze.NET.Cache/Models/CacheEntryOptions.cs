@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.NET.Cache.Models;
 
-public struct CacheEntryOptions
+public class CacheEntryOptions
 {
     private DateTimeOffset? _absoluteExpiration;
     private TimeSpan? _absoluteExpirationRelativeToNow;
