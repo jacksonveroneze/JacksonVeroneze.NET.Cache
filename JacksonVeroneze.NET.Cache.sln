@@ -22,9 +22,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.Util", "tests\JacksonVeroneze.NET.Cache.Util\JacksonVeroneze.NET.Cache.Util.csproj", "{A2A68056-1A5D-491D-953A-C848641996DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.BarrelCache", "src\JacksonVeroneze.NET.Cache.BarrelCache\JacksonVeroneze.NET.Cache.BarrelCache.csproj", "{7BB6E47B-08D1-4080-90A2-145D9F651B61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.BarrelCache", "src\JacksonVeroneze.NET.BarrelCache\JacksonVeroneze.NET.BarrelCache.csproj", "{7BB6E47B-08D1-4080-90A2-145D9F651B61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.DistributedCache", "src\JacksonVeroneze.NET.Cache.DistributedCache\JacksonVeroneze.NET.Cache.DistributedCache.csproj", "{2DED59DB-B360-4AB8-BB63-9E8B9556A402}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.DistributedCache", "src\JacksonVeroneze.NET.DistributedCache\JacksonVeroneze.NET.DistributedCache.csproj", "{2DED59DB-B360-4AB8-BB63-9E8B9556A402}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.BarrelCache.UnitTests", "tests\JacksonVeroneze.NET.Cache.BarrelCache.UnitTests\JacksonVeroneze.NET.Cache.BarrelCache.UnitTests.csproj", "{2C4172BC-72E3-469A-9793-62E7CB098368}"
 EndProject

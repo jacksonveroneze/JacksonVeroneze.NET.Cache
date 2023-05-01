@@ -1,15 +1,16 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
+using JacksonVeroneze.NET.DistributedCache.Models;
 
-namespace JacksonVeroneze.NET.Cache.DistributedCache.Extensions;
+namespace JacksonVeroneze.NET.DistributedCache.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class SerializeDeserializeExtensions
 {
     public static byte[] Serialize<TItem>(this TItem item)
     {
-        Models.CacheEntry<TItem> entry = new(item);
+        CacheEntry<TItem> entry = new(item);
 
         string json = JsonSerializer.Serialize(entry);
 
@@ -20,8 +21,8 @@ public static class SerializeDeserializeExtensions
 
     public static TItem Deserialize<TItem>(this byte[]? value)
     {
-        Models.CacheEntry<TItem> item = JsonSerializer
-            .Deserialize<Models.CacheEntry<TItem>>(value);
+        CacheEntry<TItem> item = JsonSerializer
+            .Deserialize<CacheEntry<TItem>>(value);
 
         return item.Value;
     }

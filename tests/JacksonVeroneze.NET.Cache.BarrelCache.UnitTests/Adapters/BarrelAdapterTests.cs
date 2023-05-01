@@ -1,4 +1,4 @@
-using JacksonVeroneze.NET.Cache.BarrelCache.Adapters;
+using JacksonVeroneze.NET.BarrelCache.Adapters;
 using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using JacksonVeroneze.NET.Cache.Util;

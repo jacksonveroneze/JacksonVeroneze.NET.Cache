@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using JacksonVeroneze.NET.Cache.BarrelCache.Adapters;
+using JacksonVeroneze.NET.BarrelCache.Adapters;
 using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace JacksonVeroneze.NET.Cache.BarrelCache.Extensions;
+namespace JacksonVeroneze.NET.BarrelCache.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class ServiceCollectionExtensions

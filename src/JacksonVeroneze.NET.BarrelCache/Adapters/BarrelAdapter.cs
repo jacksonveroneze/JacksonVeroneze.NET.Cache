@@ -2,7 +2,7 @@ using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using MonkeyCache.FileStore;
 
-namespace JacksonVeroneze.NET.Cache.BarrelCache.Adapters;
+namespace JacksonVeroneze.NET.BarrelCache.Adapters;
 
 public class BarrelAdapter : ICacheAdapter
 {

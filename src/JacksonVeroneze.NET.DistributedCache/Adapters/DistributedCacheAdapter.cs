@@ -1,9 +1,9 @@
-using JacksonVeroneze.NET.Cache.DistributedCache.Extensions;
 using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
+using JacksonVeroneze.NET.DistributedCache.Extensions;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace JacksonVeroneze.NET.Cache.DistributedCache.Adapters;
+namespace JacksonVeroneze.NET.DistributedCache.Adapters;
 
 public class DistributedCacheAdapter : ICacheAdapter
 {

@@ -1,6 +1,6 @@
 using System.Text;
 using System.Text.Json;
-using JacksonVeroneze.NET.Cache.DistributedCache.Models;
+using JacksonVeroneze.NET.DistributedCache.Models;
 
 namespace JacksonVeroneze.NET.Cache.Util.Builders;
 

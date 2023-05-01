@@ -117,9 +117,9 @@ public class CacheService : ICacheService
 
         action(options);
 
-        if (options.AbsoluteExpiration is null ||
-            options.AbsoluteExpirationRelativeToNow is null ||
-            options.SlidingExpiration is null)
+        if (!(options.AbsoluteExpiration != null ||
+              options.AbsoluteExpirationRelativeToNow != null ||
+              options.SlidingExpiration != null))
         {
             throw new ArgumentException(
                 $"{nameof(CacheEntryOptions)} invalid expiration");
