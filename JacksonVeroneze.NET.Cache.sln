@@ -22,6 +22,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.Util", "tests\JacksonVeroneze.NET.Cache.Util\JacksonVeroneze.NET.Cache.Util.csproj", "{A2A68056-1A5D-491D-953A-C848641996DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.BarrelCache", "src\JacksonVeroneze.NET.Cache.BarrelCache\JacksonVeroneze.NET.Cache.BarrelCache.csproj", "{7BB6E47B-08D1-4080-90A2-145D9F651B61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.DistributedCache", "src\JacksonVeroneze.NET.Cache.DistributedCache\JacksonVeroneze.NET.Cache.DistributedCache.csproj", "{2DED59DB-B360-4AB8-BB63-9E8B9556A402}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.BarrelCache.UnitTests", "tests\JacksonVeroneze.NET.Cache.BarrelCache.UnitTests\JacksonVeroneze.NET.Cache.BarrelCache.UnitTests.csproj", "{2C4172BC-72E3-469A-9793-62E7CB098368}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.DistributedCache.UnitTests", "tests\JacksonVeroneze.NET.Cache.DistributedCache.UnitTests\JacksonVeroneze.NET.Cache.DistributedCache.UnitTests.csproj", "{CC1A0783-1A3A-4F64-8F73-B0FB0C6010CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +51,30 @@ Global
 		{A2A68056-1A5D-491D-953A-C848641996DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2A68056-1A5D-491D-953A-C848641996DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2A68056-1A5D-491D-953A-C848641996DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BB6E47B-08D1-4080-90A2-145D9F651B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB6E47B-08D1-4080-90A2-145D9F651B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB6E47B-08D1-4080-90A2-145D9F651B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB6E47B-08D1-4080-90A2-145D9F651B61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DED59DB-B360-4AB8-BB63-9E8B9556A402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DED59DB-B360-4AB8-BB63-9E8B9556A402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DED59DB-B360-4AB8-BB63-9E8B9556A402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DED59DB-B360-4AB8-BB63-9E8B9556A402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C4172BC-72E3-469A-9793-62E7CB098368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C4172BC-72E3-469A-9793-62E7CB098368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C4172BC-72E3-469A-9793-62E7CB098368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C4172BC-72E3-469A-9793-62E7CB098368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC1A0783-1A3A-4F64-8F73-B0FB0C6010CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC1A0783-1A3A-4F64-8F73-B0FB0C6010CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC1A0783-1A3A-4F64-8F73-B0FB0C6010CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC1A0783-1A3A-4F64-8F73-B0FB0C6010CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2DD6D78D-A323-4558-9A3C-AC6B83E442C2} = {69700159-2472-4E72-9A47-DBCE3B4B2DD6}
 		{3E0FC1BC-C8C8-4406-B67C-A0F7D7736A7C} = {59B69C29-BE73-438B-9FF5-AFEC10404C69}
 		{A2A68056-1A5D-491D-953A-C848641996DF} = {59B69C29-BE73-438B-9FF5-AFEC10404C69}
+		{7BB6E47B-08D1-4080-90A2-145D9F651B61} = {69700159-2472-4E72-9A47-DBCE3B4B2DD6}
+		{2DED59DB-B360-4AB8-BB63-9E8B9556A402} = {69700159-2472-4E72-9A47-DBCE3B4B2DD6}
+		{2C4172BC-72E3-469A-9793-62E7CB098368} = {59B69C29-BE73-438B-9FF5-AFEC10404C69}
+		{CC1A0783-1A3A-4F64-8F73-B0FB0C6010CB} = {59B69C29-BE73-438B-9FF5-AFEC10404C69}
 	EndGlobalSection
 EndGlobal

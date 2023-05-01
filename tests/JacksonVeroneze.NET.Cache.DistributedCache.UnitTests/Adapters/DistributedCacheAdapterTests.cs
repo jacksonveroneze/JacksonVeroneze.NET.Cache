@@ -1,10 +1,10 @@
-using JacksonVeroneze.NET.Cache.Adapters;
+using JacksonVeroneze.NET.Cache.DistributedCache.Adapters;
 using JacksonVeroneze.NET.Cache.Models;
 using JacksonVeroneze.NET.Cache.Util;
 using JacksonVeroneze.NET.Cache.Util.Builders;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace JacksonVeroneze.NET.Cache.UnitTests.Adapters;
+namespace JacksonVeroneze.NET.Cache.DistributedCache.UnitTests.Adapters;
 
 [ExcludeFromCodeCoverage]
 public class DistributedCacheAdapterTests

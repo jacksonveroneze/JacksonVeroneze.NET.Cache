@@ -31,4 +31,6 @@ jobs:
         run: dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }} --include-symbols --include-source
 
       - name: Publish Package
-        run: dotnet nuget push ./src/JacksonVeroneze.NET.Cache/bin/Release/JacksonVeroneze.NET.Cache.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PUBLISH_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: |
+          dotnet nuget push ./src/JacksonVeroneze.NET.Cache.BarrelCache/bin/Release/JacksonVeroneze.NET.Cache.BarrelCache.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PUBLISH_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push ./src/JacksonVeroneze.NET.Cache.DistributedCache/bin/Release/JacksonVeroneze.NET.Cache.DistributedCache.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PUBLISH_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

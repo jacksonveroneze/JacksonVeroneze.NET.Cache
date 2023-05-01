@@ -3,7 +3,7 @@ using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace JacksonVeroneze.NET.Cache.Adapters;
+namespace JacksonVeroneze.NET.Cache.DistributedCache.Adapters;
 
 public class DistributedCacheAdapter : ICacheAdapter
 {
@@ -15,7 +15,7 @@ public class DistributedCacheAdapter : ICacheAdapter
     }
 
     public async Task<TItem?> GetAsync<TItem>(string key,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default) where TItem : class
     {
         byte[]? value = await _cache.GetAsync(
             key, cancellationToken);
@@ -34,7 +34,7 @@ public class DistributedCacheAdapter : ICacheAdapter
     public Task SetAsync<TItem>(string key,
         TItem value,
         CacheEntryOptions options,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default) where TItem : class
     {
         DistributedCacheEntryOptions cacheOptions = new()
         {
