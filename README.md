@@ -21,11 +21,8 @@ Tabela de conteúdos
 
 ```csharp
 services.AddCacheService();
-```
 
-O método de extensão registra as seguintes dependências:
-
-```csharp
+// O método de extensão registra as seguintes dependências:
 services.AddTransient<ICacheAdapter, DistributedCacheAdapter>();
 services.AddTransient<ICacheService, CacheService>();
 ```
