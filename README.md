@@ -20,7 +20,7 @@ Tabela de conteúdos
 ## ✅ Uso
 
 ```yaml
-    services.AddDistribCache();
+    services.AddCacheService();
 ```
 
 ## 🛠 Tecnologias
