@@ -30,6 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\JacksonVeroneze.NET.Cache.BarrelCache\JacksonVeroneze.NET.Cache.BarrelCache.csproj" />
         <ProjectReference Include="..\JacksonVeroneze.NET.Cache.Util\JacksonVeroneze.NET.Cache.Util.csproj" />
     </ItemGroup>
 

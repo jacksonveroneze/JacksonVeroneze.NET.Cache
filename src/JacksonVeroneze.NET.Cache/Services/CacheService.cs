@@ -117,6 +117,14 @@ public class CacheService : ICacheService
 
         action(options);
 
+        if (options.AbsoluteExpiration is null ||
+            options.AbsoluteExpirationRelativeToNow is null ||
+            options.SlidingExpiration is null)
+        {
+            throw new ArgumentException(
+                $"{nameof(CacheEntryOptions)} invalid expiration");
+        }
+
         await _adapter.SetAsync(formatedKey,
             item, options, cancellationToken);
 

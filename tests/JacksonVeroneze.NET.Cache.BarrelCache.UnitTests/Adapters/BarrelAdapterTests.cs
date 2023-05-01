@@ -1,31 +1,25 @@
-using JacksonVeroneze.NET.Cache.DistributedCache.Adapters;
+using JacksonVeroneze.NET.Cache.BarrelCache.Adapters;
 using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using JacksonVeroneze.NET.Cache.Util;
 using JacksonVeroneze.NET.Cache.Util.Builders;
-using Microsoft.Extensions.Caching.Distributed;
 
-namespace JacksonVeroneze.NET.Cache.DistributedCache.UnitTests.Adapters;
+namespace JacksonVeroneze.NET.Cache.BarrelCache.UnitTests.Adapters;
 
 [ExcludeFromCodeCoverage]
-public class DistributedCacheAdapterTests
+public class BarrelAdapterTests
 {
-    private readonly Mock<IDistributedCache> _mockDistributedCache;
-
     private readonly ICacheAdapter _adapter;
 
-    public DistributedCacheAdapterTests()
+    public BarrelAdapterTests()
     {
-        _mockDistributedCache = new Mock<IDistributedCache>();
-
-        _adapter = new DistributedCacheAdapter(
-            _mockDistributedCache.Object);
+        _adapter = new BarrelAdapter();
     }
 
     #region GetAsync
 
-    [Fact(DisplayName = nameof(DistributedCacheAdapter)
-                        + nameof(DistributedCacheAdapter.GetAsync)
+    [Fact(DisplayName = nameof(BarrelAdapter)
+                        + nameof(BarrelAdapter.GetAsync)
                         + "not found in cache - return null")]
     public async Task GetAsync_NotFound_ReturnNull()
     {
@@ -33,20 +27,6 @@ public class DistributedCacheAdapterTests
         // Arrange
         // -------------------------------------------------------
         const string key = "cache_key";
-
-        byte[]? expected = null;
-
-        _mockDistributedCache.Setup(mock =>
-                mock.GetAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<CancellationToken>()))
-            .Callback((string keyCb, CancellationToken _) =>
-            {
-                keyCb.Should()
-                    .NotBeEmpty()
-                    .And.Contain(key);
-            })
-            .ReturnsAsync(expected);
 
         // -------------------------------------------------------
         // Act
@@ -58,14 +38,10 @@ public class DistributedCacheAdapterTests
         // -------------------------------------------------------
         result.Should()
             .BeNull();
-
-        _mockDistributedCache.Verify(mock =>
-            mock.GetAsync(It.IsAny<string>(),
-                It.IsAny<CancellationToken>()), Times.Once);
     }
 
-    [Fact(DisplayName = nameof(DistributedCacheAdapter)
-                        + nameof(DistributedCacheAdapter.GetAsync)
+    [Fact(DisplayName = nameof(BarrelAdapter)
+                        + nameof(BarrelAdapter.GetAsync)
                         + "found in cache - return data")]
     public async Task GetAsync_Found_ReturnData()
     {
@@ -75,19 +51,11 @@ public class DistributedCacheAdapterTests
         const string key = "cache_key";
 
         User user = UserBuilder.BuildSingle();
-        byte[] expected = UserDataBuilder.BuildSingle(user);
 
-        _mockDistributedCache.Setup(mock =>
-                mock.GetAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<CancellationToken>()))
-            .Callback((string keyCb, CancellationToken _) =>
-            {
-                keyCb.Should()
-                    .NotBeEmpty()
-                    .And.Contain(key);
-            })
-            .ReturnsAsync(expected);
+        await _adapter.SetAsync(key, user, new CacheEntryOptions()
+        {
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10)
+        });
 
         // -------------------------------------------------------
         // Act
@@ -100,18 +68,14 @@ public class DistributedCacheAdapterTests
         result.Should()
             .NotBeNull()
             .And.BeEquivalentTo(user);
-
-        _mockDistributedCache.Verify(mock =>
-            mock.GetAsync(It.IsAny<string>(),
-                It.IsAny<CancellationToken>()), Times.Once);
     }
 
     #endregion
 
     #region RemoveAsync
 
-    [Fact(DisplayName = nameof(DistributedCacheAdapter)
-                        + nameof(DistributedCacheAdapter.RemoveAsync)
+    [Fact(DisplayName = nameof(BarrelAdapter)
+                        + nameof(BarrelAdapter.RemoveAsync)
                         + "remove success")]
     public async Task RemoveAsync_RemoveSuccess()
     {
@@ -119,6 +83,13 @@ public class DistributedCacheAdapterTests
         // Arrange
         // -------------------------------------------------------
         const string key = "cache_key";
+
+        User user = UserBuilder.BuildSingle();
+
+        await _adapter.SetAsync(key, user, new CacheEntryOptions()
+        {
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10)
+        });
 
         // -------------------------------------------------------
         // Act
@@ -128,17 +99,17 @@ public class DistributedCacheAdapterTests
         // -------------------------------------------------------
         // Assert
         // -------------------------------------------------------
-        _mockDistributedCache.Verify(mock =>
-            mock.RemoveAsync(It.IsAny<string>(),
-                It.IsAny<CancellationToken>()), Times.Once);
+        User? verifyUser = await _adapter.GetAsync<User>(key);
+
+        verifyUser.Should().BeNull();
     }
 
     #endregion
 
     #region SetAsync
 
-    [Fact(DisplayName = nameof(DistributedCacheAdapter)
-                        + nameof(DistributedCacheAdapter.SetAsync)
+    [Fact(DisplayName = nameof(BarrelAdapter)
+                        + nameof(BarrelAdapter.SetAsync)
                         + "set success")]
     public async Task SetAsync_SetSuccess()
     {
@@ -163,11 +134,9 @@ public class DistributedCacheAdapterTests
         // -------------------------------------------------------
         // Assert
         // -------------------------------------------------------
-        _mockDistributedCache.Verify(mock =>
-            mock.SetAsync(It.IsAny<string>(),
-                It.IsAny<byte[]>(),
-                It.IsAny<DistributedCacheEntryOptions>(),
-                It.IsAny<CancellationToken>()), Times.Once);
+        User? verifyUser = await _adapter.GetAsync<User>(key);
+
+        verifyUser.Should().NotBeNull();
     }
 
     #endregion

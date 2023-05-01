@@ -33,8 +33,8 @@ public class BarrelAdapter : ICacheAdapter
         CacheEntryOptions options,
         CancellationToken cancellationToken = default)
     {
-        Barrel.Current.Add(key, value,
-            expireIn: options.AbsoluteExpirationRelativeToNow!.Value);
+        Barrel.Current.Add(
+            key, value, options.AbsoluteExpirationRelativeToNow!.Value);
 
         return Task.CompletedTask;
     }

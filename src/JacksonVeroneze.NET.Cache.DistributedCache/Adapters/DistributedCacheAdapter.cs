@@ -1,4 +1,4 @@
-using JacksonVeroneze.NET.Cache.Extensions;
+using JacksonVeroneze.NET.Cache.DistributedCache.Extensions;
 using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using Microsoft.Extensions.Caching.Distributed;
