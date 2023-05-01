@@ -20,7 +20,14 @@ Tabela de conteúdos
 ## ✅ Uso
 
 ```yaml
-    services.AddCacheService();
+services.AddCacheService();
+```
+
+O método de extensão registra as seguintes dependências:
+
+```csharp
+services.AddTransient<ICacheAdapter, DistributedCacheAdapter>();
+services.AddTransient<ICacheService, CacheService>();
 ```
 
 ## 🛠 Tecnologias
@@ -29,10 +36,6 @@ As seguintes libs/ferramentas foram usadas na construção da aplicação
 
 - [C# 10.0](https://docs.microsoft.com/pt-br/dotnet/csharp/)
 - [ASP.NET 7](https://dotnet.microsoft.com/)
-
-As seguintes ferramentas foram usadas na infra da aplicação
-
-- [SonarQube](https://www.sonarqube.org/)
 
 ## ✅ Contribuição
 
