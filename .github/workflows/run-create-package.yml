@@ -33,5 +33,5 @@ jobs:
       - name: Publish Package
         run: |
           dotnet nuget push ./src/JacksonVeroneze.NET.Cache/bin/Release/JacksonVeroneze.NET.Cache.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PUBLISH_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
-          dotnet nuget push ./src/JacksonVeroneze.NET.Cache.BarrelCache/bin/Release/JacksonVeroneze.NET.BarrelCache.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PUBLISH_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
-          dotnet nuget push ./src/JacksonVeroneze.NET.Cache.DistributedCache/bin/Release/JacksonVeroneze.NET.DistributedCache.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PUBLISH_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push ./src/JacksonVeroneze.NET.BarrelCache/bin/Release/JacksonVeroneze.NET.BarrelCache.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PUBLISH_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push ./src/JacksonVeroneze.NET.DistributedCache/bin/Release/JacksonVeroneze.NET.DistributedCache.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PUBLISH_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
