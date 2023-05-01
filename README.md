@@ -19,7 +19,7 @@ Tabela de conteúdos
 
 ## ✅ Uso
 
-```yaml
+```csharp
 services.AddCacheService();
 ```
 
