@@ -26,6 +26,42 @@ public class DistributedCacheAdapterTests
 
     [Fact(DisplayName = nameof(DistributedCacheAdapter)
                         + nameof(DistributedCacheAdapter.GetAsync)
+                        + "GetAsync - PrimitiveType - not found in cache - return null")]
+    public async Task GetAsync_PrimitiveType_NotFound_ReturnNull()
+    {
+        // -------------------------------------------------------
+        // Arrange
+        // -------------------------------------------------------
+        const string key = "cache_key";
+
+        byte[]? expected = null;
+
+        _mockDistributedCache.Setup(mock =>
+                mock.GetAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+            .Callback((string keyCb, CancellationToken _) =>
+            {
+                keyCb.Should()
+                    .NotBeEmpty()
+                    .And.Contain(key);
+            })
+            .ReturnsAsync(expected);
+
+        // -------------------------------------------------------
+        // Act
+        // -------------------------------------------------------
+        bool? result = await _adapter.GetAsync<bool?>(key);
+
+        // -------------------------------------------------------
+        // Assert
+        // -------------------------------------------------------
+        result.Should()
+            .BeNull();
+    }
+
+    [Fact(DisplayName = nameof(DistributedCacheAdapter)
+                        + nameof(DistributedCacheAdapter.GetAsync)
                         + "not found in cache - return null")]
     public async Task GetAsync_NotFound_ReturnNull()
     {

@@ -37,7 +37,7 @@ public class CacheService : ICacheService
 
         string formatedKey = FormatKey(key);
 
-        TItem? value = await _adapter.GetAsync<TItem>(
+        TItem? value = await _adapter.GetAsync<TItem?>(
             formatedKey, cancellationToken);
 
         _logger.LogGet(nameof(CacheService),
@@ -58,7 +58,7 @@ public class CacheService : ICacheService
 
         string formatedKey = FormatKey(key);
 
-        TItem? value = await _adapter.GetAsync<TItem>(
+        TItem? value = await _adapter.GetAsync<TItem?>(
             formatedKey, cancellationToken);
 
         if (value is not null)
