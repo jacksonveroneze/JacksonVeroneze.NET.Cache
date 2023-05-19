@@ -2,6 +2,8 @@ namespace JacksonVeroneze.NET.Cache.Models;
 
 public class CacheEntryOptions
 {
+    public bool AllowStoreNullValue { get; set; } = true;
+    
     private DateTimeOffset? _absoluteExpiration;
     private TimeSpan? _absoluteExpirationRelativeToNow;
     private TimeSpan? _slidingExpiration;

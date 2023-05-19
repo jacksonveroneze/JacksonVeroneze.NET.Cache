@@ -3,6 +3,7 @@ using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using JacksonVeroneze.NET.Cache.Util;
 using JacksonVeroneze.NET.Cache.Util.Builders;
+using MonkeyCache.FileStore;
 
 namespace JacksonVeroneze.NET.Cache.BarrelCache.UnitTests.Adapters;
 
@@ -14,6 +15,8 @@ public class BarrelAdapterTests
     public BarrelAdapterTests()
     {
         _adapter = new BarrelAdapter();
+        
+        Barrel.Current.EmptyAll();
     }
 
     #region GetAsync

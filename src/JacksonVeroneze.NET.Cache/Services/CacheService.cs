@@ -75,6 +75,11 @@ public class CacheService : ICacheService
 
         TItem item = await factory.Invoke(options);
 
+        if (item == null && !options.AllowStoreNullValue)
+        {
+            return item;
+        }
+
         await _adapter.SetAsync(formatedKey,
             item, options, cancellationToken);
 
