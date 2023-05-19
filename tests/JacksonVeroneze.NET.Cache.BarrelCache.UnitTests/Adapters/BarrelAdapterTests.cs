@@ -3,6 +3,7 @@ using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using JacksonVeroneze.NET.Cache.Util;
 using JacksonVeroneze.NET.Cache.Util.Builders;
+using MonkeyCache.FileStore;
 
 namespace JacksonVeroneze.NET.Cache.BarrelCache.UnitTests.Adapters;
 
@@ -14,9 +15,33 @@ public class BarrelAdapterTests
     public BarrelAdapterTests()
     {
         _adapter = new BarrelAdapter();
+        
+        Barrel.Current.EmptyAll();
     }
 
     #region GetAsync
+
+    [Fact(DisplayName = nameof(BarrelAdapter)
+                        + nameof(BarrelAdapter.GetAsync)
+                        + "GetAsync - PrimitiveType - not found in cache - return null")]
+    public async Task GetAsync_PrimitiveType_NotFound_ReturnNull()
+    {
+        // -------------------------------------------------------
+        // Arrange
+        // -------------------------------------------------------
+        const string key = "cache_key";
+
+        // -------------------------------------------------------
+        // Act
+        // -------------------------------------------------------
+        bool? result = await _adapter.GetAsync<bool?>(key);
+
+        // -------------------------------------------------------
+        // Assert
+        // -------------------------------------------------------
+        result.Should()
+            .BeNull();
+    }
 
     [Fact(DisplayName = nameof(BarrelAdapter)
                         + nameof(BarrelAdapter.GetAsync)
