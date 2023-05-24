@@ -30,6 +30,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Cache.DistributedCache.UnitTests", "tests\JacksonVeroneze.NET.Cache.DistributedCache.UnitTests\JacksonVeroneze.NET.Cache.DistributedCache.UnitTests.csproj", "{CC1A0783-1A3A-4F64-8F73-B0FB0C6010CB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{2F278441-D3E3-4DDF-93AF-DF70F615FABC}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\run-commit-linter.yml = .github\workflows\run-commit-linter.yml
+		.github\workflows\run-create-package.yml = .github\workflows\run-create-package.yml
+		.github\workflows\run-pr-assign.yml = .github\workflows\run-pr-assign.yml
+		.github\workflows\run-unit-tests.yml = .github\workflows\run-unit-tests.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,5 +84,6 @@ Global
 		{2DED59DB-B360-4AB8-BB63-9E8B9556A402} = {69700159-2472-4E72-9A47-DBCE3B4B2DD6}
 		{2C4172BC-72E3-469A-9793-62E7CB098368} = {59B69C29-BE73-438B-9FF5-AFEC10404C69}
 		{CC1A0783-1A3A-4F64-8F73-B0FB0C6010CB} = {59B69C29-BE73-438B-9FF5-AFEC10404C69}
+		{2F278441-D3E3-4DDF-93AF-DF70F615FABC} = {4617355E-6977-4D9A-B60E-7967E0B2F140}
 	EndGlobalSection
 EndGlobal
