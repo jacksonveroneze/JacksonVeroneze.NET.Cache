@@ -5,24 +5,15 @@ using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.NET.Cache.Services;
 
-public class CacheService : ICacheService
+public class CacheService(
+    ILogger<CacheService> logger,
+    ICacheAdapter adapter) : ICacheService
 {
-    private string _prefixKey;
-    private readonly ILogger<CacheService> _logger;
-    private readonly ICacheAdapter _adapter;
-
-    public CacheService(ILogger<CacheService> logger,
-        ICacheAdapter adapter)
-    {
-        _logger = logger;
-        _adapter = adapter;
-
-        _prefixKey = string.Empty;
-    }
+    private string _prefixKey = string.Empty;
 
     public ICacheService WithPrefixKey(string prefixKey)
     {
-        ArgumentException.ThrowIfNullOrEmpty(prefixKey, nameof(prefixKey));
+        ArgumentException.ThrowIfNullOrEmpty(prefixKey);
 
         _prefixKey = prefixKey;
 
@@ -32,15 +23,15 @@ public class CacheService : ICacheService
     public async Task<TItem?> GetAsync<TItem>(string key,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
-        ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
+        ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
+        ArgumentException.ThrowIfNullOrEmpty(key);
 
         string formatedKey = FormatKey(key);
 
-        TItem? value = await _adapter.GetAsync<TItem?>(
+        TItem? value = await adapter.GetAsync<TItem?>(
             formatedKey, cancellationToken);
 
-        _logger.LogGet(nameof(CacheService),
+        logger.LogGet(nameof(CacheService),
             nameof(GetAsync),
             formatedKey,
             value != null);
@@ -52,18 +43,18 @@ public class CacheService : ICacheService
         Func<CacheEntryOptions, Task<TItem>> factory,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
-        ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
-        ArgumentNullException.ThrowIfNull(factory, nameof(factory));
+        ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
+        ArgumentException.ThrowIfNullOrEmpty(key);
+        ArgumentNullException.ThrowIfNull(factory);
 
         string formatedKey = FormatKey(key);
 
-        TItem? value = await _adapter.GetAsync<TItem?>(
+        TItem? value = await adapter.GetAsync<TItem?>(
             formatedKey, cancellationToken);
 
         if (value is not null)
         {
-            _logger.LogGet(nameof(CacheService),
+            logger.LogGet(nameof(CacheService),
                 nameof(GetOrCreateAsync),
                 formatedKey,
                 true);
@@ -80,10 +71,10 @@ public class CacheService : ICacheService
             return item;
         }
 
-        await _adapter.SetAsync(formatedKey,
+        await adapter.SetAsync(formatedKey,
             item, options, cancellationToken);
 
-        _logger.LogSet(nameof(CacheService),
+        logger.LogSet(nameof(CacheService),
             nameof(GetOrCreateAsync),
             formatedKey);
 
@@ -93,15 +84,15 @@ public class CacheService : ICacheService
     public async Task RemoveAsync(string key,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
-        ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
+        ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
+        ArgumentException.ThrowIfNullOrEmpty(key);
 
         string formatedKey = FormatKey(key);
 
-        await _adapter.RemoveAsync(formatedKey,
+        await adapter.RemoveAsync(formatedKey,
             cancellationToken);
 
-        _logger.LogRemove(nameof(CacheService),
+        logger.LogRemove(nameof(CacheService),
             nameof(RemoveAsync),
             formatedKey);
     }
@@ -111,10 +102,10 @@ public class CacheService : ICacheService
         Action<CacheEntryOptions> action,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrEmpty(_prefixKey, nameof(_prefixKey));
-        ArgumentException.ThrowIfNullOrEmpty(key, nameof(key));
-        ArgumentNullException.ThrowIfNull(item, nameof(item));
-        ArgumentNullException.ThrowIfNull(action, nameof(action));
+        ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
+        ArgumentException.ThrowIfNullOrEmpty(key);
+        ArgumentNullException.ThrowIfNull(item);
+        ArgumentNullException.ThrowIfNull(action);
 
         string formatedKey = FormatKey(key);
 
@@ -130,10 +121,10 @@ public class CacheService : ICacheService
                 $"{nameof(CacheEntryOptions)} invalid expiration");
         }
 
-        await _adapter.SetAsync(formatedKey,
+        await adapter.SetAsync(formatedKey,
             item, options, cancellationToken);
 
-        _logger.LogSet(nameof(CacheService),
+        logger.LogSet(nameof(CacheService),
             nameof(SetAsync),
             formatedKey);
     }

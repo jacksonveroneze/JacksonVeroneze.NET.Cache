@@ -15,7 +15,7 @@ public class BarrelAdapterTests
     public BarrelAdapterTests()
     {
         _adapter = new BarrelAdapter();
-        
+
         Barrel.Current.EmptyAll();
     }
 

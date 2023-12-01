@@ -1,45 +1,45 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <IsPackable>false</IsPackable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="FluentAssertions" Version="6.11.0" />
-        <PackageReference Include="Moq" Version="4.18.4" />
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.12.0"/>
+    <PackageReference Include="Moq" Version="4.20.70"/>
 
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
 
-        <PackageReference Include="xunit" Version="2.4.2" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="coverlet.collector" Version="6.0.0">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="coverlet.msbuild" Version="6.0.0">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
+    <PackageReference Include="xunit" Version="2.6.2"/>
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\src\JacksonVeroneze.NET.DistributedCache\JacksonVeroneze.NET.DistributedCache.csproj" />
-        <ProjectReference Include="..\JacksonVeroneze.NET.Cache.Util\JacksonVeroneze.NET.Cache.Util.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\JacksonVeroneze.NET.DistributedCache\JacksonVeroneze.NET.DistributedCache.csproj"/>
+    <ProjectReference Include="..\JacksonVeroneze.NET.Cache.Util\JacksonVeroneze.NET.Cache.Util.csproj"/>
+  </ItemGroup>
 
-    <ItemGroup>
-        <Using Include="Bogus" />
-        <Using Include="FluentAssertions" />
-        <Using Include="Moq" />
-        <Using Include="Xunit" />
-        <Using Include="System.Diagnostics.CodeAnalysis" />
-    </ItemGroup>
+  <ItemGroup>
+    <Using Include="Bogus"/>
+    <Using Include="FluentAssertions"/>
+    <Using Include="Moq"/>
+    <Using Include="Xunit"/>
+    <Using Include="System.Diagnostics.CodeAnalysis"/>
+  </ItemGroup>
 
 </Project>

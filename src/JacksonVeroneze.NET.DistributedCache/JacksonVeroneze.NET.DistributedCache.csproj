@@ -1,33 +1,33 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <PublishAot>false</PublishAot>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PublishAot>false</PublishAot>
 
-        <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
-        <PackageId>JacksonVeroneze.NET.DistributedCache</PackageId>
-        <Version>1.0.0</Version>
-        <Authors>Jackson Veroneze</Authors>
-        <Company>jacksonveroneze</Company>
-        <PackageDescription>JacksonVeroneze.NET.DistributedCache</PackageDescription>
-        <RepositoryUrl>https://github.com/jacksonveroneze/JacksonVeroneze.NET.Cache</RepositoryUrl>
-        <Title>JacksonVeroneze.NET.DistributedCache</Title>
-        <Description>Pacote utilizado para cache</Description>
-        <PackageProjectUrl>JacksonVeroneze.NET.Cache</PackageProjectUrl>
-        <PackageLicenseUrl>JacksonVeroneze.NET.Cache/blob/main/LICENSE</PackageLicenseUrl>
-        <Copyright>Jackson Veroneze</Copyright>
-    </PropertyGroup>
+    <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
+    <PackageId>JacksonVeroneze.NET.DistributedCache</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Jackson Veroneze</Authors>
+    <Company>jacksonveroneze</Company>
+    <PackageDescription>JacksonVeroneze.NET.DistributedCache</PackageDescription>
+    <RepositoryUrl>https://github.com/jacksonveroneze/JacksonVeroneze.NET.Cache</RepositoryUrl>
+    <Title>JacksonVeroneze.NET.DistributedCache</Title>
+    <Description>Pacote utilizado para cache</Description>
+    <PackageProjectUrl>JacksonVeroneze.NET.Cache</PackageProjectUrl>
+    <PackageLicenseUrl>JacksonVeroneze.NET.Cache/blob/main/LICENSE</PackageLicenseUrl>
+    <Copyright>Jackson Veroneze</Copyright>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0"/>
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0"/>
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\JacksonVeroneze.NET.Cache\JacksonVeroneze.NET.Cache.csproj"/>
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JacksonVeroneze.NET.Cache\JacksonVeroneze.NET.Cache.csproj"/>
+  </ItemGroup>
 
 </Project>

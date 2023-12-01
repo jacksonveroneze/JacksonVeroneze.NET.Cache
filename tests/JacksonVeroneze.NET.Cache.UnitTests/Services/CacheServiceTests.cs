@@ -408,9 +408,9 @@ public class CacheServiceTests
     }
 
     [Theory(DisplayName = nameof(CacheService)
-                        + nameof(CacheService.GetOrCreateAsync)
-                        + " not found in cache - retrieve data -"
-                        + " AllowStoreNullValue option")]
+                          + nameof(CacheService.GetOrCreateAsync)
+                          + " not found in cache - retrieve data -"
+                          + " AllowStoreNullValue option")]
     [InlineData(true)]
     [InlineData(false)]
     public async Task GetOrCreateAsync_NotFoundInCache_RetrieveData_AllowStoreNullValue(
@@ -460,7 +460,7 @@ public class CacheServiceTests
                 It.IsAny<CancellationToken>()), Times.Once);
 
         Func<Times> times = allowNullStore ? Times.Once : Times.Never;
-        
+
         _mockCacheAdapter.Verify(mock =>
             mock.SetAsync(It.IsAny<string>(),
                 It.IsAny<User>(),
@@ -470,7 +470,7 @@ public class CacheServiceTests
         _mockLogger.Verify(nameof(CacheService.GetOrCreateAsync),
             times: times, expectedLogLevel: LogLevel.Debug);
     }
-    
+
     #endregion
 
     #region RemoveAsync

@@ -5,19 +5,13 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace JacksonVeroneze.NET.DistributedCache.Adapters;
 
-public class DistributedCacheAdapter : ICacheAdapter
+public class DistributedCacheAdapter(
+    IDistributedCache cache) : ICacheAdapter
 {
-    private readonly IDistributedCache _cache;
-
-    public DistributedCacheAdapter(IDistributedCache cache)
-    {
-        _cache = cache;
-    }
-
     public async Task<TItem?> GetAsync<TItem>(string key,
         CancellationToken cancellationToken = default)
     {
-        byte[]? value = await _cache.GetAsync(
+        byte[]? value = await cache.GetAsync(
             key, cancellationToken);
 
         bool existsItem = value is not null && value.Length != 0;
@@ -28,7 +22,7 @@ public class DistributedCacheAdapter : ICacheAdapter
     public Task RemoveAsync(string key,
         CancellationToken cancellationToken = default)
     {
-        return _cache.RemoveAsync(key, cancellationToken);
+        return cache.RemoveAsync(key, cancellationToken);
     }
 
     public Task SetAsync<TItem>(string key,
@@ -43,7 +37,7 @@ public class DistributedCacheAdapter : ICacheAdapter
             AbsoluteExpirationRelativeToNow = options.AbsoluteExpirationRelativeToNow
         };
 
-        return _cache.SetAsync(key,
+        return cache.SetAsync(key,
             value.Serialize(), cacheOptions, cancellationToken);
     }
 }
