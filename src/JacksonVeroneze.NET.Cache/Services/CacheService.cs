@@ -20,7 +20,9 @@ public class CacheService(
         return this;
     }
 
-    public async Task<TItem?> GetAsync<TItem>(string key,
+    #region Get
+
+    public async Task<TItem?> TryGetAsync<TItem>(string key,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
@@ -28,18 +30,30 @@ public class CacheService(
 
         string formatedKey = FormatKey(key);
 
-        TItem? value = await adapter.GetAsync<TItem?>(
-            formatedKey, cancellationToken);
+        try
+        {
+            TItem? value = await adapter.GetAsync<TItem?>(
+                formatedKey, cancellationToken);
 
-        logger.LogGet(nameof(CacheService),
-            nameof(GetAsync),
-            formatedKey,
-            value != null);
+            logger.LogGet(nameof(CacheService),
+                nameof(TryGetAsync), formatedKey, value != null);
 
-        return value;
+            return value;
+        }
+        catch (Exception ex)
+        {
+            logger.LogGenericError(nameof(CacheService),
+                nameof(TryGetAsync), formatedKey, ex);
+
+            return default;
+        }
     }
 
-    public async Task<TItem?> GetOrCreateAsync<TItem>(string key,
+    #endregion
+
+    #region GetOrCreate
+
+    public async Task<TItem?> TryGetOrCreateAsync<TItem>(string key,
         Func<CacheEntryOptions, Task<TItem>> factory,
         CancellationToken cancellationToken = default)
     {
@@ -49,16 +63,11 @@ public class CacheService(
 
         string formatedKey = FormatKey(key);
 
-        TItem? value = await adapter.GetAsync<TItem?>(
+        TItem? value = await TryGetAsync<TItem?>(
             formatedKey, cancellationToken);
 
         if (value is not null)
         {
-            logger.LogGet(nameof(CacheService),
-                nameof(GetOrCreateAsync),
-                formatedKey,
-                true);
-
             return value;
         }
 
@@ -66,22 +75,20 @@ public class CacheService(
 
         TItem item = await factory.Invoke(options);
 
-        if (item == null && !options.AllowStoreNullValue)
+        if (item == null && options.AllowStoreNullValue)
         {
-            return item;
+            await TrySetAsync(formatedKey,
+                item, options, cancellationToken);
         }
-
-        await adapter.SetAsync(formatedKey,
-            item, options, cancellationToken);
-
-        logger.LogSet(nameof(CacheService),
-            nameof(GetOrCreateAsync),
-            formatedKey);
 
         return item;
     }
 
-    public async Task RemoveAsync(string key,
+    #endregion
+
+    #region Remove
+
+    public async Task<bool> TryRemoveAsync(string key,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
@@ -89,45 +96,74 @@ public class CacheService(
 
         string formatedKey = FormatKey(key);
 
-        await adapter.RemoveAsync(formatedKey,
-            cancellationToken);
+        try
+        {
+            await adapter.RemoveAsync(formatedKey,
+                cancellationToken);
 
-        logger.LogRemove(nameof(CacheService),
-            nameof(RemoveAsync),
-            formatedKey);
+            logger.LogRemove(nameof(CacheService),
+                nameof(TryRemoveAsync),
+                formatedKey);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            logger.LogGenericError(nameof(CacheService),
+                nameof(TryRemoveAsync), formatedKey, ex);
+
+            return false;
+        }
     }
 
-    public async Task SetAsync<TItem>(string key,
+    #endregion
+
+    #region Set
+
+    public async Task<bool> TrySetAsync<TItem>(string key,
         TItem item,
-        Action<CacheEntryOptions> action,
+        CacheEntryOptions options,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
         ArgumentException.ThrowIfNullOrEmpty(key);
         ArgumentNullException.ThrowIfNull(item);
-        ArgumentNullException.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(options);
 
         string formatedKey = FormatKey(key);
 
-        CacheEntryOptions options = new();
-
-        action(options);
-
-        if (!(options.AbsoluteExpiration != null ||
-              options.AbsoluteExpirationRelativeToNow != null ||
-              options.SlidingExpiration != null))
+        if (options is
+            {
+                AbsoluteExpiration: null,
+                AbsoluteExpirationRelativeToNow: null,
+                SlidingExpiration: null
+            })
         {
             throw new ArgumentException(
                 $"{nameof(CacheEntryOptions)} invalid expiration");
         }
 
-        await adapter.SetAsync(formatedKey,
-            item, options, cancellationToken);
+        try
+        {
+            await adapter.SetAsync(formatedKey,
+                item, options, cancellationToken);
 
-        logger.LogSet(nameof(CacheService),
-            nameof(SetAsync),
-            formatedKey);
+            logger.LogSet(nameof(CacheService),
+                nameof(TrySetAsync),
+                formatedKey);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            logger.LogGenericError(nameof(CacheService),
+                nameof(TrySetAsync), formatedKey, ex);
+
+            return false;
+        }
     }
+
+    #endregion
 
     #region Key
 

@@ -82,7 +82,7 @@ public class CacheServiceTests
     #region GetAsync
 
     [Theory(DisplayName = nameof(CacheService)
-                          + nameof(CacheService.GetAsync)
+                          + nameof(CacheService.TryGetAsync)
                           + "Argument EmptyOrNull - Throw ArgumentException")]
     [InlineData("")]
     [InlineData(null)]
@@ -93,7 +93,7 @@ public class CacheServiceTests
         // Arrange && Act
         // -------------------------------------------------------
         Func<Task> action = async () =>
-            await _service.GetAsync<User>(key);
+            await _service.TryGetAsync<User>(key);
 
         // -------------------------------------------------------
         // Assert
@@ -103,7 +103,7 @@ public class CacheServiceTests
     }
 
     [Fact(DisplayName = nameof(CacheService)
-                        + nameof(CacheService.GetAsync)
+                        + nameof(CacheService.TryGetAsync)
                         + "GetAsync - PrimitiveType - not found in cache - return null")]
     public async Task GetAsync_PrimitiveType_NotFound_ReturnNull()
     {
@@ -129,7 +129,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        bool? result = await _service.GetAsync<bool?>(key);
+        bool? result = await _service.TryGetAsync<bool?>(key);
 
         // -------------------------------------------------------
         // Assert
@@ -141,12 +141,12 @@ public class CacheServiceTests
             mock.GetAsync<bool?>(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService.GetAsync),
+        _mockLogger.Verify(nameof(CacheService.TryGetAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
     [Fact(DisplayName = nameof(CacheService)
-                        + nameof(CacheService.GetAsync)
+                        + nameof(CacheService.TryGetAsync)
                         + "not found in cache - return null")]
     public async Task GetAsync_NotFound_ReturnNull()
     {
@@ -172,7 +172,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        User? result = await _service.GetAsync<User>(key);
+        User? result = await _service.TryGetAsync<User>(key);
 
         // -------------------------------------------------------
         // Assert
@@ -184,12 +184,12 @@ public class CacheServiceTests
             mock.GetAsync<User>(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService.GetAsync),
+        _mockLogger.Verify(nameof(CacheService.TryGetAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
     [Fact(DisplayName = nameof(CacheService)
-                        + nameof(CacheService.GetAsync)
+                        + nameof(CacheService.TryGetAsync)
                         + "found in cache - return data")]
     public async Task GetAsync_Found_ReturnData()
     {
@@ -215,7 +215,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        User? result = await _service.GetAsync<User>(key);
+        User? result = await _service.TryGetAsync<User>(key);
 
         // -------------------------------------------------------
         // Assert
@@ -228,7 +228,7 @@ public class CacheServiceTests
             mock.GetAsync<User>(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService.GetAsync),
+        _mockLogger.Verify(nameof(CacheService.TryGetAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
@@ -237,7 +237,7 @@ public class CacheServiceTests
     #region GetOrCreateAsync
 
     [Fact(DisplayName = nameof(CacheService)
-                        + nameof(CacheService.GetOrCreateAsync)
+                        + nameof(CacheService.TryGetOrCreateAsync)
                         + "GetOrCreateAsync - PrimitiveType - not found in cache - return null")]
     public async Task GetOrCreateAsync_PrimitiveType_NotFound_ReturnNull()
     {
@@ -270,7 +270,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        bool? result = await _service.GetOrCreateAsync(key, func);
+        bool? result = await _service.TryGetOrCreateAsync(key, func);
 
         // -------------------------------------------------------
         // Assert
@@ -288,12 +288,12 @@ public class CacheServiceTests
                 It.IsAny<CacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService.GetOrCreateAsync),
+        _mockLogger.Verify(nameof(CacheService.TryGetOrCreateAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
     [Fact(DisplayName = nameof(CacheService)
-                        + nameof(CacheService.GetOrCreateAsync)
+                        + nameof(CacheService.TryGetOrCreateAsync)
                         + "found in cache - return data")]
     public async Task GetOrCreateAsync_Found_ReturnData()
     {
@@ -326,7 +326,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        User? result = await _service.GetOrCreateAsync(key, func);
+        User? result = await _service.TryGetOrCreateAsync(key, func);
 
         // -------------------------------------------------------
         // Assert
@@ -345,12 +345,12 @@ public class CacheServiceTests
                 It.IsAny<CacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), Times.Never);
 
-        _mockLogger.Verify(nameof(CacheService.GetOrCreateAsync),
+        _mockLogger.Verify(nameof(CacheService.TryGetOrCreateAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
     [Fact(DisplayName = nameof(CacheService)
-                        + nameof(CacheService.GetOrCreateAsync)
+                        + nameof(CacheService.TryGetOrCreateAsync)
                         + "not found in cache - retrieve data")]
     public async Task GetOrCreateAsync_NotFoundInCache_RetrieveData()
     {
@@ -384,7 +384,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        User? result = await _service.GetOrCreateAsync(key, func);
+        User? result = await _service.TryGetOrCreateAsync(key, func);
 
         // -------------------------------------------------------
         // Assert
@@ -403,12 +403,12 @@ public class CacheServiceTests
                 It.IsAny<CacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService.GetOrCreateAsync),
+        _mockLogger.Verify(nameof(CacheService.TryGetOrCreateAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
     [Theory(DisplayName = nameof(CacheService)
-                          + nameof(CacheService.GetOrCreateAsync)
+                          + nameof(CacheService.TryGetOrCreateAsync)
                           + " not found in cache - retrieve data -"
                           + " AllowStoreNullValue option")]
     [InlineData(true)]
@@ -447,7 +447,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        User? result = await _service.GetOrCreateAsync(key, func);
+        User? result = await _service.TryGetOrCreateAsync(key, func);
 
         // -------------------------------------------------------
         // Assert
@@ -467,7 +467,7 @@ public class CacheServiceTests
                 It.IsAny<CacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), times);
 
-        _mockLogger.Verify(nameof(CacheService.GetOrCreateAsync),
+        _mockLogger.Verify(nameof(CacheService.TryGetOrCreateAsync),
             times: times, expectedLogLevel: LogLevel.Debug);
     }
 
@@ -476,7 +476,7 @@ public class CacheServiceTests
     #region RemoveAsync
 
     [Theory(DisplayName = nameof(CacheService)
-                          + nameof(CacheService.RemoveAsync)
+                          + nameof(CacheService.TryRemoveAsync)
                           + "Argument EmptyOrNull - Throw ArgumentException")]
     [InlineData("")]
     [InlineData(null)]
@@ -487,7 +487,7 @@ public class CacheServiceTests
         // Arrange && Act
         // -------------------------------------------------------
         Func<Task> action = async () =>
-            await _service.GetAsync<User>(key);
+            await _service.TryGetAsync<User>(key);
 
         // -------------------------------------------------------
         // Assert
@@ -497,7 +497,7 @@ public class CacheServiceTests
     }
 
     [Fact(DisplayName = nameof(CacheService)
-                        + nameof(CacheService.RemoveAsync)
+                        + nameof(CacheService.TryRemoveAsync)
                         + "remove success")]
     public async Task RemoveAsync_RemoveSuccess()
     {
@@ -509,7 +509,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        await _service.RemoveAsync(key);
+        await _service.TryRemoveAsync(key);
 
         // -------------------------------------------------------
         // Assert
@@ -518,7 +518,7 @@ public class CacheServiceTests
             mock.RemoveAsync(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService.RemoveAsync),
+        _mockLogger.Verify(nameof(CacheService.TryRemoveAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
@@ -527,7 +527,7 @@ public class CacheServiceTests
     #region SetAsync
 
     [Fact(DisplayName = nameof(CacheService)
-                        + nameof(CacheService.SetAsync)
+                        + nameof(CacheService.TrySetAsync)
                         + "set success")]
     public async Task SetAsync_SetSuccess()
     {
@@ -538,16 +538,16 @@ public class CacheServiceTests
 
         User user = UserBuilder.BuildSingle();
 
-        Action<CacheEntryOptions> action = options =>
+        CacheEntryOptions action = new()
         {
-            options.AbsoluteExpirationRelativeToNow =
-                TimeSpan.FromSeconds(10);
+            AbsoluteExpirationRelativeToNow =
+                TimeSpan.FromSeconds(10)
         };
 
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        await _service.SetAsync(key, user, action);
+        await _service.TrySetAsync(key, user, action);
 
         // -------------------------------------------------------
         // Assert
@@ -558,7 +558,7 @@ public class CacheServiceTests
                 It.IsAny<CacheEntryOptions>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(CacheService.SetAsync),
+        _mockLogger.Verify(nameof(CacheService.TrySetAsync),
             times: Times.Once, expectedLogLevel: LogLevel.Debug);
     }
 
