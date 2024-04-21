@@ -8,7 +8,6 @@ public class BarrelCacheAdapter : ICacheAdapter
 {
     public BarrelCacheAdapter()
     {
-        Barrel.ApplicationId = "application_id";
         Barrel.Current.AutoExpire = true;
     }
 

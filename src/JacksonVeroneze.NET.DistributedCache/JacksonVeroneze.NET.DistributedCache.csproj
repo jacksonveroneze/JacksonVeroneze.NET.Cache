@@ -24,4 +24,10 @@
     <ProjectReference Include="..\JacksonVeroneze.NET.Cache\JacksonVeroneze.NET.Cache.csproj"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="MonkeyCache.FileStore">
+      <HintPath>..\..\..\..\.nuget\packages\monkeycache.filestore\2.1.1\lib\net6.0\MonkeyCache.FileStore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
