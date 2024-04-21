@@ -31,13 +31,13 @@ public class CacheServiceTests
             _mockLogger.Object,
             _mockCacheAdapter.Object);
 
-        _service.WithPrefixKey("prefix");
+        _service.SetPrefixKey("prefix");
     }
 
     #region WithPrefixKey
 
     [Theory(DisplayName = nameof(CacheService)
-                          + nameof(CacheService.WithPrefixKey)
+                          + nameof(CacheService.SetPrefixKey)
                           + "must return success")]
     [InlineData("a")]
     [InlineData("_prefix_")]
@@ -47,7 +47,7 @@ public class CacheServiceTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        ICacheService result = _service.WithPrefixKey(prefix);
+        ICacheService result = _service.SetPrefixKey(prefix);
 
         // -------------------------------------------------------
         // Assert
@@ -57,18 +57,18 @@ public class CacheServiceTests
     }
 
     [Theory(DisplayName = nameof(CacheService)
-                          + nameof(CacheService.WithPrefixKey)
+                          + nameof(CacheService.SetPrefixKey)
                           + "EmptyOrNull Throw ArgumentException")]
     [InlineData("")]
     [InlineData(null)]
     public void WithPrefixKey_EmptyOrNull_ThrowArgumentException(
-        string prefix)
+        string? prefix)
     {
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
         Action action = () => _service
-            .WithPrefixKey(prefix);
+            .SetPrefixKey(prefix);
 
         // -------------------------------------------------------
         // Assert
@@ -87,13 +87,13 @@ public class CacheServiceTests
     [InlineData("")]
     [InlineData(null)]
     public async Task GetAsync_ArgumentEmptyOrNull_ThrowArgumentException(
-        string key)
+        string? key)
     {
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
         Func<Task> action = async () =>
-            await _service.TryGetAsync<User>(key);
+            await _service.TryGetAsync<User>(key!);
 
         // -------------------------------------------------------
         // Assert
@@ -481,13 +481,13 @@ public class CacheServiceTests
     [InlineData("")]
     [InlineData(null)]
     public async Task RemoveAsync_ArgumentEmptyOrNull_ThrowArgumentException(
-        string key)
+        string? key)
     {
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
         Func<Task> action = async () =>
-            await _service.TryGetAsync<User>(key);
+            await _service.TryGetAsync<User>(key!);
 
         // -------------------------------------------------------
         // Assert

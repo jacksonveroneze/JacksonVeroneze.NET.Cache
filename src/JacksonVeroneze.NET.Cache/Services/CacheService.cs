@@ -11,7 +11,8 @@ public class CacheService(
 {
     private string _prefixKey = string.Empty;
 
-    public ICacheService WithPrefixKey(string prefixKey)
+    public ICacheService SetPrefixKey(
+        string? prefixKey)
     {
         ArgumentException.ThrowIfNullOrEmpty(prefixKey);
 
@@ -22,7 +23,8 @@ public class CacheService(
 
     #region Get
 
-    public async Task<TItem?> TryGetAsync<TItem>(string key,
+    public async Task<TItem?> TryGetAsync<TItem>(
+        string key,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
@@ -53,7 +55,8 @@ public class CacheService(
 
     #region GetOrCreate
 
-    public async Task<TItem?> TryGetOrCreateAsync<TItem>(string key,
+    public async Task<TItem?> TryGetOrCreateAsync<TItem>(
+        string key,
         Func<CacheEntryOptions, Task<TItem>> factory,
         CancellationToken cancellationToken = default)
     {
@@ -88,7 +91,8 @@ public class CacheService(
 
     #region Remove
 
-    public async Task<bool> TryRemoveAsync(string key,
+    public async Task<bool> TryRemoveAsync(
+        string key,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
@@ -120,14 +124,15 @@ public class CacheService(
 
     #region Set
 
-    public async Task<bool> TrySetAsync<TItem>(string key,
-        TItem item,
+    public async Task<bool> TrySetAsync<TItem>(
+        string key,
+        TItem value,
         CacheEntryOptions options,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
         ArgumentException.ThrowIfNullOrEmpty(key);
-        ArgumentNullException.ThrowIfNull(item);
+        ArgumentNullException.ThrowIfNull(value);
         ArgumentNullException.ThrowIfNull(options);
 
         string formatedKey = FormatKey(key);
@@ -146,7 +151,7 @@ public class CacheService(
         try
         {
             await adapter.SetAsync(formatedKey,
-                item, options, cancellationToken);
+                value, options, cancellationToken);
 
             logger.LogSet(nameof(CacheService),
                 nameof(TrySetAsync),

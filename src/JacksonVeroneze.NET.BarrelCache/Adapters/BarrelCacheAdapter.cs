@@ -4,9 +4,9 @@ using MonkeyCache.FileStore;
 
 namespace JacksonVeroneze.NET.BarrelCache.Adapters;
 
-public class BarrelAdapter : ICacheAdapter
+public class BarrelCacheAdapter : ICacheAdapter
 {
-    public BarrelAdapter()
+    public BarrelCacheAdapter()
     {
         Barrel.ApplicationId = "application_id";
         Barrel.Current.AutoExpire = true;

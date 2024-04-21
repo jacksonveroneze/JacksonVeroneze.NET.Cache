@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.BarrelCache.Adapters;
-using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using JacksonVeroneze.NET.Cache.Util;
 using JacksonVeroneze.NET.Cache.Util.Builders;
@@ -8,21 +7,21 @@ using MonkeyCache.FileStore;
 namespace JacksonVeroneze.NET.Cache.BarrelCache.UnitTests.Adapters;
 
 [ExcludeFromCodeCoverage]
-public class BarrelAdapterTests
+public class BarrelCacheAdapterTests
 {
-    private readonly ICacheAdapter _adapter;
+    private readonly BarrelCacheAdapter _cacheAdapter;
 
-    public BarrelAdapterTests()
+    public BarrelCacheAdapterTests()
     {
-        _adapter = new BarrelAdapter();
+        _cacheAdapter = new BarrelCacheAdapter();
 
         Barrel.Current.EmptyAll();
     }
 
     #region GetAsync
 
-    [Fact(DisplayName = nameof(BarrelAdapter)
-                        + nameof(BarrelAdapter.GetAsync)
+    [Fact(DisplayName = nameof(BarrelCacheAdapter)
+                        + nameof(BarrelCacheAdapter.GetAsync)
                         + "GetAsync - PrimitiveType - not found in cache - return null")]
     public async Task GetAsync_PrimitiveType_NotFound_ReturnNull()
     {
@@ -34,7 +33,7 @@ public class BarrelAdapterTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        bool? result = await _adapter.GetAsync<bool?>(key);
+        bool? result = await _cacheAdapter.GetAsync<bool?>(key);
 
         // -------------------------------------------------------
         // Assert
@@ -43,8 +42,8 @@ public class BarrelAdapterTests
             .BeNull();
     }
 
-    [Fact(DisplayName = nameof(BarrelAdapter)
-                        + nameof(BarrelAdapter.GetAsync)
+    [Fact(DisplayName = nameof(BarrelCacheAdapter)
+                        + nameof(BarrelCacheAdapter.GetAsync)
                         + "not found in cache - return null")]
     public async Task GetAsync_NotFound_ReturnNull()
     {
@@ -56,7 +55,7 @@ public class BarrelAdapterTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        User? result = await _adapter.GetAsync<User>(key);
+        User? result = await _cacheAdapter.GetAsync<User>(key);
 
         // -------------------------------------------------------
         // Assert
@@ -65,8 +64,8 @@ public class BarrelAdapterTests
             .BeNull();
     }
 
-    [Fact(DisplayName = nameof(BarrelAdapter)
-                        + nameof(BarrelAdapter.GetAsync)
+    [Fact(DisplayName = nameof(BarrelCacheAdapter)
+                        + nameof(BarrelCacheAdapter.GetAsync)
                         + "found in cache - return data")]
     public async Task GetAsync_Found_ReturnData()
     {
@@ -77,7 +76,7 @@ public class BarrelAdapterTests
 
         User user = UserBuilder.BuildSingle();
 
-        await _adapter.SetAsync(key, user, new CacheEntryOptions()
+        await _cacheAdapter.SetAsync(key, user, new CacheEntryOptions()
         {
             AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10)
         });
@@ -85,7 +84,7 @@ public class BarrelAdapterTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        User? result = await _adapter.GetAsync<User>(key);
+        User? result = await _cacheAdapter.GetAsync<User>(key);
 
         // -------------------------------------------------------
         // Assert
@@ -99,8 +98,8 @@ public class BarrelAdapterTests
 
     #region RemoveAsync
 
-    [Fact(DisplayName = nameof(BarrelAdapter)
-                        + nameof(BarrelAdapter.RemoveAsync)
+    [Fact(DisplayName = nameof(BarrelCacheAdapter)
+                        + nameof(BarrelCacheAdapter.RemoveAsync)
                         + "remove success")]
     public async Task RemoveAsync_RemoveSuccess()
     {
@@ -111,7 +110,7 @@ public class BarrelAdapterTests
 
         User user = UserBuilder.BuildSingle();
 
-        await _adapter.SetAsync(key, user, new CacheEntryOptions()
+        await _cacheAdapter.SetAsync(key, user, new CacheEntryOptions()
         {
             AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10)
         });
@@ -119,12 +118,12 @@ public class BarrelAdapterTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        await _adapter.RemoveAsync(key);
+        await _cacheAdapter.RemoveAsync(key);
 
         // -------------------------------------------------------
         // Assert
         // -------------------------------------------------------
-        User? verifyUser = await _adapter.GetAsync<User>(key);
+        User? verifyUser = await _cacheAdapter.GetAsync<User>(key);
 
         verifyUser.Should().BeNull();
     }
@@ -133,8 +132,8 @@ public class BarrelAdapterTests
 
     #region SetAsync
 
-    [Fact(DisplayName = nameof(BarrelAdapter)
-                        + nameof(BarrelAdapter.SetAsync)
+    [Fact(DisplayName = nameof(BarrelCacheAdapter)
+                        + nameof(BarrelCacheAdapter.SetAsync)
                         + "set success")]
     public async Task SetAsync_SetSuccess()
     {
@@ -154,12 +153,12 @@ public class BarrelAdapterTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        await _adapter.SetAsync(key, user, options);
+        await _cacheAdapter.SetAsync(key, user, options);
 
         // -------------------------------------------------------
         // Assert
         // -------------------------------------------------------
-        User? verifyUser = await _adapter.GetAsync<User>(key);
+        User? verifyUser = await _cacheAdapter.GetAsync<User>(key);
 
         verifyUser.Should().NotBeNull();
     }
