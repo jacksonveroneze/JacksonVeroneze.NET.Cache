@@ -4,20 +4,25 @@ namespace JacksonVeroneze.NET.Cache.Interfaces;
 
 public interface ICacheService
 {
-    Task<TItem?> GetAsync<TItem>(string key,
+    ICacheService SetPrefixKey(
+        string prefixKey);
+
+    Task<TItem?> TryGetAsync<TItem>(
+        string key,
         CancellationToken cancellationToken = default);
 
-    Task<TItem?> GetOrCreateAsync<TItem>(string key,
+    Task<TItem?> TryGetOrCreateAsync<TItem>(
+        string key,
         Func<CacheEntryOptions, Task<TItem>> factory,
         CancellationToken cancellationToken = default);
 
-    Task RemoveAsync(string key,
+    Task<bool> TryRemoveAsync(
+        string key,
         CancellationToken cancellationToken = default);
 
-    Task SetAsync<TItem>(string key,
+    Task<bool> TrySetAsync<TItem>(
+        string key,
         TItem value,
-        Action<CacheEntryOptions> action,
+        CacheEntryOptions options,
         CancellationToken cancellationToken = default);
-
-    ICacheService WithPrefixKey(string prefixKey);
 }

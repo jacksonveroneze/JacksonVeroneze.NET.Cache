@@ -4,13 +4,8 @@ using System.Text.Json.Serialization;
 namespace JacksonVeroneze.NET.DistributedCache.Models;
 
 [ExcludeFromCodeCoverage]
-public readonly struct CacheEntry<TItem>
+[method: JsonConstructor]
+public readonly struct CacheEntry<TItem>(TItem value)
 {
-    public TItem Value { get; }
-
-    [JsonConstructor]
-    public CacheEntry(TItem value)
-    {
-        Value = value;
-    }
+    public TItem Value { get; } = value;
 }

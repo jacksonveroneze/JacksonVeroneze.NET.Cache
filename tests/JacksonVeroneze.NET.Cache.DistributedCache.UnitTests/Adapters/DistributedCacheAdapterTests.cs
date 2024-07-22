@@ -1,4 +1,3 @@
-using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.NET.Cache.Models;
 using JacksonVeroneze.NET.Cache.Util;
 using JacksonVeroneze.NET.Cache.Util.Builders;
@@ -12,7 +11,7 @@ public class DistributedCacheAdapterTests
 {
     private readonly Mock<IDistributedCache> _mockDistributedCache;
 
-    private readonly ICacheAdapter _adapter;
+    private readonly DistributedCacheAdapter _adapter;
 
     public DistributedCacheAdapterTests()
     {

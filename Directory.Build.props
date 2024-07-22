@@ -1,0 +1,48 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PublishAot>false</PublishAot>
+
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <ReportAnalyzer>true</ReportAnalyzer>
+    <AnalysisMode>All</AnalysisMode>
+    <Features>strict</Features>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <ExcludeFromSourceBuild>true</ExcludeFromSourceBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+
+    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+
+    <AccelerateBuildsInVisualStudio>false</AccelerateBuildsInVisualStudio>
+
+    <NoWarn>
+      $(NoWarn);
+    </NoWarn>
+    <NoError>
+      $(NoError);
+    </NoError>
+
+  </PropertyGroup>
+
+  <!--  <ItemGroup>-->
+  <!--    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers">-->
+  <!--      <PrivateAssets>all</PrivateAssets>-->
+  <!--      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
+  <!--    </PackageReference>-->
+  <!--  </ItemGroup>-->
+
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)BannedSymbols.txt" Link="Properties/BannedSymbols.txt" />
+    <Compile Include="$(MSBuildThisFileDirectory)/AssemblyInfo.cs" Link="Properties/AssemblyInfo.common.cs" />
+  </ItemGroup>
+</Project>
