@@ -71,6 +71,9 @@ public class CacheService(
 
         if (value is not null)
         {
+            logger.LogGet(nameof(CacheService),
+                nameof(TryGetOrCreateAsync), formatedKey, true);
+
             return value;
         }
 
@@ -78,10 +81,13 @@ public class CacheService(
 
         TItem item = await factory.Invoke(options);
 
-        if (item == null && options.AllowStoreNullValue)
+        if (item is not null || options.AllowStoreNullValue)
         {
             await TrySetAsync(formatedKey,
                 item, options, cancellationToken);
+
+            logger.LogGet(nameof(CacheService),
+                nameof(TryGetOrCreateAsync), formatedKey, item is not null);
         }
 
         return item;
@@ -132,7 +138,6 @@ public class CacheService(
     {
         ArgumentException.ThrowIfNullOrEmpty(_prefixKey);
         ArgumentException.ThrowIfNullOrEmpty(key);
-        ArgumentNullException.ThrowIfNull(value);
         ArgumentNullException.ThrowIfNull(options);
 
         string formatedKey = FormatKey(key);

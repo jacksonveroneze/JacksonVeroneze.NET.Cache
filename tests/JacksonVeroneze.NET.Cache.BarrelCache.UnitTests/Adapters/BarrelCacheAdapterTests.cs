@@ -13,6 +13,7 @@ public class BarrelCacheAdapterTests
 
     public BarrelCacheAdapterTests()
     {
+        Barrel.ApplicationId = nameof(BarrelCacheAdapterTests);
         _cacheAdapter = new BarrelCacheAdapter();
 
         Barrel.Current.EmptyAll();

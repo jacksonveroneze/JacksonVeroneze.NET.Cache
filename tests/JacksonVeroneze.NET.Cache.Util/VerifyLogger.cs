@@ -16,6 +16,7 @@ public static class VerifyLogger
         Func<object, Type, bool> state = (x, __)
             => x.ToString()!.Contains(expectedMessage);
 
+#pragma warning disable CA1873
         logger.Verify(
             x => x.Log(
                 It.Is<LogLevel>(l => l == expectedLogLevel),
@@ -23,6 +24,7 @@ public static class VerifyLogger
                 It.Is<It.IsAnyType>((v, t) => state(v, t)),
                 It.IsAny<Exception>(),
                 It.Is<Func<It.IsAnyType, Exception, string>>((v, t) => true)!), times);
+#pragma warning restore CA1873
 
         return logger;
     }

@@ -4,15 +4,15 @@ namespace JacksonVeroneze.NET.Cache.Interfaces;
 
 public interface ICacheAdapter
 {
-    Task<TItem?> GetAsync<TItem>(
+    public Task<TItem?> GetAsync<TItem>(
         string key,
         CancellationToken cancellationToken = default);
 
-    Task RemoveAsync(
+    public Task RemoveAsync(
         string key,
         CancellationToken cancellationToken = default);
 
-    Task SetAsync<TItem>(
+    public Task SetAsync<TItem>(
         string key,
         TItem value,
         CacheEntryOptions options,
